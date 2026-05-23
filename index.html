@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPMB Online - UPTD SDN 21 SANGGALEA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1a1d4b; 
+            --primary-light: #4f46e5; 
+            --secondary: #00f7ff; 
+            --accent: #e21fdf; 
+            --bg-deep: #0f172a; 
+            --bg-card: rgba(30, 41, 59, 0.7); 
+            --border-tech: #334155; 
+            --glow-cyan: 0 0 15px rgba(0, 247, 255, 0.4);
+            --glow-cyan-strong: 0 0 25px rgba(0, 247, 255, 0.6);
+            --glow-magenta: 0 0 15px rgba(226, 31, 223, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.3), 0 4px 6px -2px rgba(0,0,0,0.15);
+            --glass: blur(10px) saturate(180%);
+            --text-on-deep: #f8fafc;
+            --text-muted: #cbd5e1;
+            --text-bright: #ffffff;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+
+        body {
+            background-color: var(--bg-deep); color: var(--text-on-deep); line-height: 1.6; font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 10% 10%, rgba(79, 70, 229, 0.1) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(0, 247, 255, 0.1) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(226, 31, 223, 0.05) 0%, transparent 50%), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0MzQxNTUiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDR2NEgwVjB6bTAgOGg0djRIMFY4em0wIDE2aDR2NEgwVjI0em0wIDMyaDR2NEgwVjMyejI4IDMyaDR2NEgyOFYzMnpNMjggMjRoNHY0SDI4VjI0em0yOCAzMmguODF2NEg1NnYtNHpNMjggOGg0djRIMjhWOHpNMjggMGg0djRIMjhWMHogMzIgMzJoNHY0SDMyVjMyeiAzMiAyNGg0djRIMzJWMjR6IDMyIDghNHY0SDMyVjh6IDMyIDB0aDR2NEgzMlYweiIgLz48L2g+PC9nPjwvc3ZnPg==');
+            background-attachment: fixed; background-position: center;
+        }
+
+        h1, h2, h3, h4, .section-title { font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: -0.5px; color: var(--text-bright); }
+
+        header {
+            background: linear-gradient(135deg, rgba(26, 29, 75, 0.9), rgba(15, 23, 42, 0.9)); color: var(--text-bright); text-align: center;
+            padding: 5rem 1rem 4rem 1rem; box-shadow: 0 0 30px rgba(79, 70, 229, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border-bottom: 2px solid rgba(79, 70, 229, 0.5); backdrop-filter: blur(5px);
+        }
+
+        header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 60%); transform: rotate(45deg); pointer-events: none; z-index: 0;
+        }
+
+        .logo-wrapper { margin-bottom: 1.5rem; z-index: 1; display: flex; justify-content: center; align-items: center; min-height: 80px; }
+        .header-icon { font-size: 3.5rem; text-shadow: 0 0 20px rgba(0, 247, 255, 0.8), 0 0 30px rgba(0, 247, 255, 0.4); color: var(--secondary); }
+        .uploaded-logo-img { max-width: 120px; max-height: 120px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(0, 247, 255, 0.6)); animation: fadeIn 0.5s ease; }
+        header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 3px; background: linear-gradient(180deg, #ffffff, #cbd5e1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 1; }
+        header p { font-weight: 300; font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); letter-spacing: 2px; z-index: 1; text-transform: uppercase; }
+        .container { max-width: 1200px; margin: -2rem auto 3rem auto; padding: 0 1rem; position: relative; z-index: 10; }
+
+        .visi-sekolah-section { background: var(--bg-card); padding: 3rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg), var(--glow-magenta); margin-bottom: 2.5rem; text-align: center; border: 2px solid var(--accent); animation: fadeIn 0.8s ease; position: relative; backdrop-filter: blur(10px); }
+        .visi-sekolah-section i { font-size: 2rem; color: var(--accent); opacity: 0.5; position: absolute; top: 1rem; left: 2rem; }
+        .visi-sekolah-title { color: var(--accent); font-size: 1.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 700; }
+        .visi-sekolah-text { font-size: 1.2rem; font-style: italic; color: var(--text-on-deep); line-height: 1.8; max-width: 900px; margin: 0 auto; font-weight: 400; text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); }
+
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 992px) { .main-grid { grid-template-columns: 1.8fr 1.2fr; } }
+
+        .section-title { margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--text-bright); display: flex; align-items: center; gap: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .section-title i { color: var(--secondary); text-shadow: var(--glow-cyan); }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+
+        .card { background: rgba(30, 41, 59, 0.5); padding: 1.75rem; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 2px solid rgba(79, 70, 229, 0.5); transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; backdrop-filter: blur(10px); }
+        .card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--shadow-lg), 0 0 15px rgba(79, 70, 229, 0.5); border-color: var(--secondary); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-header i { font-size: 1.5rem; color: var(--secondary); background: rgba(0, 247, 255, 0.1); padding: 0.75rem; border-radius: 50%; box-shadow: var(--glow-cyan); }
+        .card h3 { font-size: 1.2rem; color: var(--text-bright); font-weight: 600; }
+        .card .date { color: var(--secondary); font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; text-shadow: var(--glow-cyan); }
+        .card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
+        .status { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; background-color: rgba(226, 31, 223, 0.1); color: var(--accent); align-self: flex-start; box-shadow: var(--glow-magenta); text-transform: uppercase; }
+
+        /* PANEL REGULASI DENGAN SCROLL SCALABLE (MINIMAL 10 FILE) */
+        .peraturan-panel { margin-top: 2rem; background: rgba(30, 41, 59, 0.6); border: 2px solid rgba(0, 247, 255, 0.3); padding: 2rem; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 1rem; backdrop-filter: blur(10px); }
+        .peraturan-list-container { max-height: 420px; overflow-y: auto; padding-right: 0.5rem; margin-top: 0.5rem; }
+        
+        /* Custom Scrollbar Regulasi */
+        .peraturan-list-container::-webkit-scrollbar { width: 6px; }
+        .peraturan-list-container::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); border-radius: 10px; }
+        .peraturan-list-container::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; box-shadow: var(--glow-cyan); }
+
+        .regulasi-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 1.1rem; border-radius: 8px; border-left: 4px solid var(--secondary); margin-bottom: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .regulasi-item:last-child { margin-bottom: 0; }
+        .regulasi-item .info { flex: 1; margin-right: 1rem; overflow: hidden; }
+        .regulasi-item title-text { font-weight: 600; font-size: 0.95rem; color: var(--text-bright); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .regulasi-item sub-text { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+        .btn-lihat-regulasi { background: rgba(0, 247, 255, 0.1); color: var(--secondary); border: 1px solid var(--secondary); text-decoration: none; padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; box-shadow: var(--glow-cyan); }
+        .btn-lihat-regulasi:hover { background: var(--secondary); color: var(--bg-deep); }
+
+        .right-panel-box { background: rgba(30, 41, 59, 0.7); padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 2px solid rgba(79, 70, 229, 0.5); margin-bottom: 2rem; position: relative; overflow: hidden; backdrop-filter: blur(10px); }
+        .input-group { position: relative; margin-bottom: 1.5rem; }
+        .input-group i { position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); color: rgba(0, 247, 255, 0.8); text-shadow: var(--glow-cyan); }
+        .input-group input { width: 100%; padding: 1rem 1rem 1rem 2.75rem; border: 2px solid var(--border-tech); border-radius: 8px; outline: none; font-size: 0.95rem; background: rgba(15, 23, 42, 0.7); color: var(--text-on-deep); transition: all 0.3s ease; }
+        .input-group input:focus { background: rgba(15, 23, 42, 0.9); border-color: var(--secondary); box-shadow: var(--glow-cyan-strong); }
+
+        .btn-submit { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary-light), var(--accent)); color: var(--text-bright); border: none; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 1px; position: relative; overflow: hidden; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg), 0 0 20px rgba(79, 70, 229, 0.5), 0 0 20px rgba(226, 31, 223, 0.5); }
+
+        #pendaftaran-section { display: none; background: rgba(30, 41, 59, 0.8); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); margin-top: 1rem; animation: fadeIn 0.5s ease; border: 2px solid rgba(79, 70, 229, 0.5); backdrop-filter: blur(10px); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .form-row { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        @media (min-width: 768px) { .form-row { grid-template-columns: 1fr 1fr; } }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; color: var(--text-bright); text-transform: uppercase; }
+        .form-group .help-text { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+        .form-group select, .form-group input[type="text"] { width: 100%; padding: 1rem; border: 2px solid var(--border-tech); border-radius: 8px; outline: none; font-size: 0.95rem; background: rgba(15, 23, 42, 0.7); color: var(--text-on-deep); transition: all 0.3s ease; }
+        .form-group select:focus, .form-group input[type="text"]:focus { background: rgba(15, 23, 42, 0.9); border-color: var(--secondary); box-shadow: var(--glow-cyan-strong); }
+
+        .file-upload-box { border: 2px dashed rgba(0, 247, 255, 0.3); padding: 1.5rem; text-align: center; border-radius: var(--radius-md); background-color: rgba(15, 23, 42, 0.5); transition: all 0.3s ease; position: relative; }
+        .file-upload-box i { font-size: 1.75rem; color: var(--secondary); margin-bottom: 0.5rem; display: block; text-shadow: var(--glow-cyan); }
+        .file-upload-box:hover { border-color: var(--secondary); background-color: rgba(0, 247, 255, 0.1); box-shadow: var(--glow-cyan); }
+        .file-upload-box input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
+        .file-upload-label { color: rgba(0, 247, 255, 0.8); font-weight: 600; font-size: 0.85rem; pointer-events: none; text-transform: uppercase; }
+        .upload-section-title { margin-top: 3rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-tech); font-size: 1.25rem; color: var(--text-bright); display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
+
+        .back-btn { background: rgba(15, 23, 42, 0.7); color: var(--secondary); border: 2px solid rgba(0, 247, 255, 0.3); padding: 0.75rem 1.25rem; border-radius: 8px; cursor: pointer; margin-bottom: 2rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; font-size: 0.9rem; }
+        .back-btn:hover { background: rgba(0, 247, 255, 0.1); border-color: var(--secondary); box-shadow: var(--glow-cyan); transform: translateX(-5px); }
+        .btn-reset-view { background: none; border: none; color: var(--accent); font-size: 0.8rem; cursor: pointer; font-weight: 600; text-decoration: underline; margin-top: 0.5rem; display: inline-block; text-shadow: var(--glow-magenta); text-transform: uppercase; }
+        .empty-state-text { text-align: center; color: var(--text-muted); font-size: 0.95rem; font-style: italic; padding: 2rem 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-wrapper" id="logo-target-container">
+            <i class="fas fa-graduation-cap header-icon" id="default-logo-icon"></i>
+        </div>
+        <h1>SPMB ONLINE</h1>
+        <p>UPTD SDN 21 SANGGALEA</p>
+    </header>
+
+    <div class="container">
+        <section id="visi-sekolah-section" class="visi-sekolah-section">
+            <i class="fas fa-quote-left"></i>
+            <h2 class="visi-sekolah-title">Visi Satuan Pendidikan</h2>
+            <p class="visi-sekolah-text">"Mewujudkan lulusan yang beriman, berkarakter, kompeten, cinta lingkungan dan budaya lokal, melalui pembelajaran mendalam yang bermakna dan berdaya saing di era digital."</p>
+        </section>
+        
+        <div id="halaman-depan" class="main-grid">
+            <section class="jadwal-section">
+                <h2 class="section-title"><i class="fas fa-calendar-alt"></i> JALUR PENDAFTARAN 2026</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div>
+                            <div class="card-header"><i class="fas fa-hand-holding-heart"></i><h3>Jalur Afirmasi</h3></div>
+                            <span class="date"><i class="far fa-clock"></i> 8 - 9 Juni 2026</span>
+                            <p>Diperuntukkan bagi calon peserta didik dari keluarga ekonomi tidak mampu.</p>
+                        </div>
+                        <span class="status"><i class="fas fa-hourglass-half"></i> Menunggu Jadwal</span>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="card-header"><i class="fas fa-exchange-alt"></i><h3>Jalur Mutasi</h3></div>
+                            <span class="date"><i class="far fa-clock"></i> 17 - 18 Juni 2026</span>
+                            <p>Perpindahan tugas orang tua/wali dari luar daerah instansi atau perusahaan.</p>
+                        </div>
+                        <span class="status"><i class="fas fa-hourglass-half"></i> Menunggu Jadwal</span>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="card-header"><i class="fas fa-map-marked-alt"></i><h3>Jalur Zonasi</h3></div>
+                            <span class="date"><i class="far fa-clock"></i> 22 - 24 Juni 2026</span>
+                            <p>Berdasarkan wilayah tempat tinggal terdekat dengan sekolah yang dituju.</p>
+                        </div>
+                        <span class="status"><i class="fas fa-hourglass-half"></i> Menunggu Jadwal</span>
+                    </div>
+                </div>
+
+                <div class="peraturan-panel" id="peraturan-display-box">
+                    <h3 style="color: var(--secondary); font-size: 1.3rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-gavel" style="color: #ff4a4a; text-shadow: 0 0 10px rgba(255, 74, 74, 0.5);"></i> REGULASI DAN KETENTUAN RESMI
+                    </h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.25rem;">
+                        Silakan unduh dokumen panduan dan regulasi pendaftaran di bawah ini. Daftar ini dikelola secara fleksibel oleh admin sekolah melalui Control Center.
+                    </p>
+                    
+                    <div class="peraturan-list-container">
+                        <div id="daftar-regulasi">
+                            <p class="empty-state-text"><i class="fas fa-info-circle"></i> Belum ada file regulasi khusus yang diunggah admin. Silakan gunakan Control Center untuk mengunggah hingga 10+ berkas PDF.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="sidebar-section">
+                <div class="right-panel-box" style="border: 2px solid rgba(0, 247, 255, 0.4);">
+                    <h2 class="section-title" style="margin-bottom: 1.5rem;"><i class="fas fa-sign-in-alt"></i> Portal Login</h2>
+                    <form id="form-ortu" onsubmit="event.preventDefault();">
+                        <div class="form-group">
+                            <label>Email Pendaftar</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email-input" placeholder="Masukkan Email Anda" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-key"></i>
+                                <input type="password" id="password-input" placeholder="Buat/Masukkan Password" required style="padding-right: 2.5rem;">
+                                <i class="fas fa-eye" id="ikon-mata" onclick="togglePassword()" style="position: absolute; right: 1rem; left: auto; cursor: pointer; color: var(--text-muted); text-shadow: none;"></i>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-submit" onclick="loginSiswa()">
+                            Masuk Portal <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <button type="button" class="btn-submit" onclick="daftarSiswa()" style="background: transparent; border: 1px solid var(--secondary); margin-top: 10px; color: var(--secondary);">
+                            Daftar Akun Baru <i class="fas fa-user-plus"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="right-panel-box" style="border: 2px solid rgba(226, 31, 223, 0.4);">
+                    <h2 class="section-title" style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--accent);"><i class="fas fa-cogs"></i> Control Center</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Atur visualisasi website secara real-time.</p>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-image"></i> Ganti Logo</label>
+                        <div class="file-upload-box" style="padding: 0.75rem;">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 1.2rem;"></i>
+                            <input type="file" id="input-logo-custom" accept="image/*" onchange="prosesKustomLogo(event)">
+                            <span class="file-upload-label">Unggah</span>
+                        </div>
+                        <button class="btn-reset-view" id="reset-logo-btn" style="display:none;" onclick="resetLogoDefault()">Default Icon</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-images"></i> Ganti Latar</label>
+                        <div class="file-upload-box" style="padding: 0.75rem;">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 1.2rem;"></i>
+                            <input type="file" id="input-bg-custom" accept="image/*" onchange="prosesKustomBackground(event)">
+                            <span class="file-upload-label">Unggah</span>
+                        </div>
+                        <button class="btn-reset-view" id="reset-bg-btn" style="display:none;" onclick="resetBackgroundDefault()">Default Background</button>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label><i class="fas fa-gavel"></i> Upload Berkas Regulasi (PDF)</label>
+                        <span class="help-text" style="color:var(--secondary); font-size:0.75rem; display:block; margin-bottom:4px;">*Bisa pilih langsung 10 file sekaligus atau lebih</span>
+                        <div class="file-upload-box" style="padding: 0.85rem; border-color: rgba(226, 31, 223, 0.4);">
+                            <i class="fas fa-file-upload" style="font-size: 1.3rem; color: var(--accent); text-shadow: var(--glow-magenta);"></i>
+                            <input type="file" id="input-peraturan-custom" accept=".pdf" multiple onchange="prosesKustomPeraturan(event)">
+                            <span class="file-upload-label" id="label-upload-peraturan" style="color:var(--text-bright);">Pilih File-File PDF</span>
+                        </div>
+                        <button class="btn-reset-view" id="reset-peraturan-btn" style="display:none;" onclick="resetPeraturanDefault()">Kosongkan Regulasi</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section id="pendaftaran-section">
+            <button class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Beranda</button>
+            <h2 class="section-title"><i class="fas fa-file-signature"></i> FORMULIR PENDAFTARAN</h2>
+            
+            <form action="#" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Lengkap Murid</label>
+                        <input type="text" placeholder="Sesuai Akta Kelahiran" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Pilih Jalur</label>
+                        <select id="jalur-pilihan" onchange="sesuaikanDokumen()" required>
+                            <option value="">-- Pilih Jalur --</option>
+                            <option value="afirmasi">Afirmasi</option>
+                            <option value="mutasi">Mutasi</option>
+                            <option value="domisili">Zonasi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 class="upload-section-title"><i class="fas fa-folder-open"></i> Dokumen Wajib</h3>
+                <div class="cards-grid">
+                    <div class="form-group">
+                        <label>1. Pas Foto 3x4</label>
+                        <span class="help-text">(JPG/PNG, Maks 2MB)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="foto-murid" accept="image/*"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>2. Akta Kelahiran</label>
+                        <span class="help-text">(PDF/JPG, Maks 2MB)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="akta" accept=".pdf,image/*"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>3. Ijazah / SKL</label>
+                        <span class="help-text">(PDF/JPG, Maks 2MB)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="ijazah" accept=".pdf,image/*"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>4. Kartu Keluarga</label>
+                        <span class="help-text">(PDF/JPG, Maks 2MB)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="kk" accept=".pdf,image/*"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                </div>
+
+                <div id="dokumen-khusus-container" style="display: none;">
+                    <h3 class="upload-section-title" id="judul-dokumen-khusus"><i class="fas fa-folder-plus"></i> Dokumen Khusus</h3>
+                    <div class="cards-grid" id="area-dokumen-khusus"></div>
+                </div>
+
+                <div class="form-group" style="margin-top: 3rem;">
+                    <button type="submit" class="btn-submit" style="padding: 1.2rem; font-size: 1.2rem; border-radius: 12px; letter-spacing: 2px;">
+                        Kirim Pendaftaran <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBZILC9RbroO4HFCjejM3OfpmY4mMT0mKo",
+            authDomain: "spmb-sdn21sanggalea.firebaseapp.com",
+            projectId: "spmb-sdn21sanggalea",
+            storageBucket: "spmb-sdn21sanggalea.firebasestorage.app",
+            messagingSenderId: "386534441785",
+            appId: "1:386534441785:web:6e406ff2a77d54cc6c5ee8"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        function togglePassword() {
+            const inputPassword = document.getElementById('password-input');
+            const ikonMata = document.getElementById('ikon-mata');
+            if (inputPassword.type === "password") {
+                inputPassword.type = "text";
+                ikonMata.classList.remove("fa-eye");
+                ikonMata.classList.add("fa-eye-slash");
+                ikonMata.style.color = "var(--secondary)";
+            } else {
+                inputPassword.type = "password";
+                ikonMata.classList.remove("fa-eye-slash");
+                ikonMata.classList.add("fa-eye");
+                ikonMata.style.color = "var(--text-muted)";
+            }
+        }
+
+        function daftarSiswa() {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            if(email === "" || password === "") { alert("Email dan Password tidak boleh kosong!"); return; }
+            auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                alert("Pendaftaran Berhasil! Akun Anda sudah tersimpan.\\nSilakan klik tombol 'Masuk Portal'.");
+                document.getElementById('password-input').value = '';
+                const inputPassword = document.getElementById('password-input');
+                const ikonMata = document.getElementById('ikon-mata');
+                inputPassword.type = "password";
+                ikonMata.classList.remove("fa-eye-slash");
+                ikonMata.classList.add("fa-eye");
+                ikonMata.style.color = "var(--text-muted)";
+            })
+            .catch((error) => { alert("Gagal mendaftar: " + error.message); });
+        }
+
+        function loginSiswa() {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            if(email === "" || password === "") { alert("Masukkan Email dan Password Anda terlebih dahulu!"); return; }
+            auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                alert("Login Berhasil! Selamat Datang.");
+                bukaFormPendaftaran();
+            })
+            .catch((error) => { alert("Login Gagal! Periksa kembali email dan password Anda."); });
+        }
+
+        function bukaFormPendaftaran() {
+            document.getElementById('halaman-depan').style.display = 'none';
+            document.getElementById('visi-sekolah-section').style.display = 'none';
+            document.getElementById('pendaftaran-section').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function kembaliKeDepan() {
+            document.getElementById('pendaftaran-section').style.display = 'none';
+            document.getElementById('visi-sekolah-section').style.display = 'block';
+            document.getElementById('halaman-depan').style.display = 'grid';
+        }
+
+        function prosesKustomLogo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const container = document.getElementById('logo-target-container');
+                    container.innerHTML = `<img src="${e.target.result}" class="uploaded-logo-img" alt="Logo Sekolah Custom">`;
+                    document.getElementById('reset-logo-btn').style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function resetLogoDefault() {
+            const container = document.getElementById('logo-target-container');
+            container.innerHTML = `<i class="fas fa-graduation-cap header-icon" id="default-logo-icon"></i>`;
+            document.getElementById('input-logo-custom').value = '';
+            document.getElementById('reset-logo-btn').style.display = 'none';
+        }
+
+        function prosesKustomBackground(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundRepeat = 'no-repeat';
+                    document.getElementById('reset-bg-btn').style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function resetBackgroundDefault() {
+            document.body.style.backgroundImage = "radial-gradient(circle at 10% 10%, rgba(79, 70, 229, 0.1) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(0, 247, 255, 0.1) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(226, 31, 223, 0.05) 0%, transparent 50%), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0MzQxNTUiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDR2NEgwVjB6bTAgOGg0djRIMFY4em0wIDE2aDR2NEgwVjI0em0wIDMyaDR2NEgwVjMyejI4IDMyaDR2NEgyOFYzMnpNMjggMjRoNHY0SDI4VjI0em0yOCAzMmguODF2NEg1NnYtNHpNMjggOGg0djRIMjhWOHpNMjggMGg0djRIMjhWMHogMzIgMzJoNHY0SDMyVjMyeiAzMiAyNGg0djRIMzJWMjR6IDMyIDghNHY0SDMyVjh6IDMyIDB0aDR2NEgzMlYweiIgLz48L2c+PC9nPjwvc3ZnPg==')";
+            document.body.style.backgroundSize = "auto, auto, auto, 40px 40px";
+            document.body.style.backgroundPosition = "center";
+            document.getElementById('input-bg-custom').value = '';
+            document.getElementById('reset-bg-btn').style.display = 'none';
+        }
+
+        // FUNGSI UTMANA MENGELOLA MULTIPLE UPLOAD (MINIMAL 10 FILE PDF)
+        function prosesKustomPeraturan(event) {
+            const files = event.target.files;
+            if (files && files.length > 0) {
+                const container = document.getElementById('daftar-regulasi');
+                container.innerHTML = ''; // Kosongkan state lama / empty state
+                
+                Array.from(files).forEach((file) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                        const itemHTML = `
+                            <div class="regulasi-item">
+                                <div class="info">
+                                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--text-bright); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <i class="far fa-file-pdf" style="color:#ff4a4a; margin-right:6px;"></i> ${file.name}
+                                    </span>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted); margin: 2px 0 0 20px;">Ukuran Berkas: ${fileSizeMB} MB</p>
+                                </div>
+                                <a href="${e.target.result}" download="${file.name}" class="btn-lihat-regulasi">
+                                    <i class="fas fa-download"></i> Unduh
+                                </a>
+                            </div>
+                        `;
+                        container.innerHTML += itemHTML;
+                    }
+                    reader.readAsDataURL(file);
+                });
+                
+                document.getElementById('reset-peraturan-btn').style.display = 'inline-block';
+                document.getElementById('label-upload-peraturan').innerText = `Terunggah (${files.length} File)`;
+                
+                // Beri efek highlight visual pada panel penampil regulasi
+                const panel = document.getElementById('peraturan-display-box');
+                panel.style.borderColor = 'var(--accent)';
+                panel.style.boxShadow = 'var(--glow-magenta)';
+            }
+        }
+
+        function resetPeraturanDefault() {
+            const container = document.getElementById('daftar-regulasi');
+            container.innerHTML = `
+                <p class="empty-state-text"><i class="fas fa-info-circle"></i> Belum ada file regulasi khusus yang diunggah admin. Silakan gunakan Control Center untuk mengunggah hingga 10+ berkas PDF.</p>
+            `;
+            document.getElementById('input-peraturan-custom').value = '';
+            document.getElementById('reset-peraturan-btn').style.display = 'none';
+            document.getElementById('label-upload-peraturan').innerText = "Pilih File-File PDF";
+            
+            const panel = document.getElementById('peraturan-display-box');
+            panel.style.borderColor = 'rgba(0, 247, 255, 0.3)';
+            panel.style.boxShadow = 'none';
+        }
+
+        function sesuaikanDokumen() {
+            const jalur = document.getElementById('jalur-pilihan').value;
+            const container = document.getElementById('dokumen-khusus-container');
+            const area = document.getElementById('area-dokumen-khusus');
+            const judul = document.getElementById('judul-dokumen-khusus');
+            area.innerHTML = ''; 
+            if (jalur === "") {
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'block';
+            if (jalur === "afirmasi") {
+                judul.innerHTML = '<i class="fas fa-folder-plus"></i> KHUSUS: AFIRMASI';
+                area.innerHTML = `
+                    <div class="form-group">
+                        <label>1. Bukti Ekonomi Lemah</label>
+                        <span class="help-text">KIP/PKH/KKS. (PDF/JPG)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="bukti-miskin"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>2. Surat Pernyataan</label>
+                        <span class="help-text">Materai asli. (PDF/JPG)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="surat-pernyataan"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                `;
+            } else if (jalur === "mutasi") {
+                judul.innerHTML = '<i class="fas fa-folder-plus"></i> KHUSUS: MUTASI';
+                area.innerHTML = `
+                    <div class="form-group">
+                        <label>1. SK Penugasan Kerja</label>
+                        <span class="help-text">Instansi/Perusahaan. (PDF/JPG)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="surat-tugas"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                `;
+            } else if (jalur === "domisili") {
+                judul.innerHTML = '<i class="fas fa-folder-plus"></i> KHUSUS: ZONASI';
+                area.innerHTML = `
+                    <div class="form-group">
+                        <label>1. Rekomendasi Psikolog</label>
+                        <span class="help-text">Opsional (Cerdas Istimewa). (PDF/JPG)</span>
+                        <div class="file-upload-box"><i class="fas fa-cloud-upload-alt"></i><input type="file" id="rekomendasi-psikolog"><span class="file-upload-label">Seret File</span></div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
