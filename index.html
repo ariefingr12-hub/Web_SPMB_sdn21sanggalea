@@ -464,7 +464,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 3.5rem;">
-                <button class="btn-submit" onclick="bukaFormPendaftaran()" style="display: inline-flex; width: auto; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-light), var(--accent));">
+                <button type="button" class="btn-submit" onclick="bukaFormPendaftaran()" style="display: inline-flex; width: auto; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-light), var(--accent));">
                     <i class="fas fa-rocket"></i> MULAI PENDAFTARAN
                 </button>
             </div>
@@ -493,7 +493,7 @@
         </div>
 
         <section id="pendaftaran-section">
-            <button class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <button type="button" class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Kembali</button>
             
             <form action="#" method="POST">
                 
@@ -910,36 +910,60 @@
 
     <script>
         // =======================================================================
-        // PASTIKAN TANDA KUTIP TUNGGAL (') DI AWAL DAN AKHIR JANGAN SAMPAI TERHAPUS!
+        // 1. FUNGSI NAVIGASI TOMBOL (AMAK & PASTI JALAN)
         // =======================================================================
-        const supabaseUrl = 'MASUKKAN_URL_PROJECT_ANDA_DI_SINI';
-        const supabaseKey = 'MASUKKAN_PUBLISHABLE_KEY_ANDA_DI_SINI';
-        // =======================================================================
-        
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        function bukaFormPendaftaran() {
+        // Fungsi ini sengaja dideklarasikan ke Window secara langsung 
+        // agar tidak bisa dimatikan oleh error apapun dari script lain.
+        window.bukaFormPendaftaran = function() {
             document.getElementById('halaman-depan').style.display = 'none';
             document.getElementById('pendaftaran-section').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        };
 
-        function kembaliKeDepan() {
+        window.kembaliKeDepan = function() {
             document.getElementById('pendaftaran-section').style.display = 'none';
             document.getElementById('halaman-depan').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // =======================================================================
+        // 2. KONFIGURASI SUPABASE (HARAP GANTI KUNCI YANG BENAR)
+        // =======================================================================
+        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
+        
+        // PENTING: Kunci di bawah ini SALAH. Anda harus mencari kunci yang
+        // berawalan tulisan "eyJ...". Jangan gunakan sb_publishable.
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5bGthc2lkZmJmaG93b3pjdWNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1OTc2ODAsImV4cCI6MjA5NTE3MzY4MH0.JGkdTtl3Nh1LcDeR_dzC1lMiA_IslkQQ3QJFtu3u07A';
+        // =======================================================================
+        
+        let clientSupabase = null;
+        try {
+            // Kita bungkus pemanggilan Supabase agar jika kuncinya salah,
+            // halaman web tidak ikut hancur.
+            if (window.supabase) {
+                clientSupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            }
+        } catch (error) {
+            console.error("Gagal terhubung ke Supabase. Kunci mungkin salah format.", error);
         }
 
+        // =======================================================================
+        // 3. FUNGSI MENGAMBIL DAFTAR REGULASI
+        // =======================================================================
         async function muatDaftarFile() {
             const tempatDownload = document.getElementById('tempat-download-regulasi');
             const pesanKosong = document.getElementById('pesan-kosong');
 
+            if (!clientSupabase) {
+                if(pesanKosong) pesanKosong.innerHTML = 'Supabase belum dihubungkan. Pastikan Kunci (Key) Anda berawalan huruf "eyJ...".';
+                return;
+            }
+
             try {
-                const { data, error } = await supabase.storage.from('regulasi').list();
+                const { data, error } = await clientSupabase.storage.from('regulasi').list();
 
                 if (error) {
-                    console.error('Gagal memuat file:', error);
-                    if(pesanKosong) pesanKosong.innerHTML = 'Gagal terhubung ke server Supabase. Pastikan URL dan Key benar, serta Policy sudah diatur menjadi "anon".';
+                    if(pesanKosong) pesanKosong.innerHTML = 'Gagal mengakses penyimpanan Supabase. Pastikan Kunci (Key) berawalan "eyJ..." dan Policy (Izin Akses) sudah dicentang/diatur.';
                     return;
                 }
 
@@ -950,7 +974,7 @@
                     let listHTMLBaru = '';
 
                     files.forEach(file => {
-                        const { data: publicUrlData } = supabase.storage.from('regulasi').getPublicUrl(file.name);
+                        const { data: publicUrlData } = clientSupabase.storage.from('regulasi').getPublicUrl(file.name);
                         const fileURL = publicUrlData.publicUrl;
                         
                         let ukuranFile = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(2) + ' KB' : 'Tidak diketahui';
@@ -985,13 +1009,21 @@
                      }
                 }
             } catch (err) {
-                console.error("Terjadi kesalahan sistem:", err);
+                console.error("Terjadi kesalahan sistem saat memuat dokumen:", err);
             }
         }
 
+        // =======================================================================
+        // 4. FUNGSI UNTUK ADMIN MENGUNGGAH REGULASI
+        // =======================================================================
         async function simulasikanUnggah(event) {
             event.preventDefault(); 
             
+            if (!clientSupabase) {
+                alert("Peringatan: Supabase gagal terhubung karena Kunci (Key) Anda tidak valid (bukan berawalan eyJ...).");
+                return;
+            }
+
             const form = document.getElementById('formRegulasi');
             const inputs = form.querySelectorAll('input[type="file"]');
             const tombolSubmit = form.querySelector('button[type="submit"]');
@@ -1007,7 +1039,7 @@
                     adaFile = true;
                     const file = input.files[0];
                     
-                    const { data, error } = await supabase.storage
+                    const { data, error } = await clientSupabase.storage
                         .from('regulasi')
                         .upload(file.name, file, {
                             cacheControl: '3600',
@@ -1033,6 +1065,7 @@
             }
         }
 
+        // Jalankan perintah saat halaman dibuka
         window.onload = muatDaftarFile;
     </script>
 </body>
