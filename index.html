@@ -232,6 +232,50 @@
             cursor: pointer;
         }
 
+        /* DOWNLOAD LIST PUBLIK */
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .download-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(0, 247, 255, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .download-item:hover {
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.2);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s;
+        }
+
+        .btn-download:hover {
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
         /* ADVANCED FORM STYLING BASED ON IMAGES */
         #pendaftaran-section { display: none; margin-top: 1rem; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -364,7 +408,7 @@
 <body>
 
    <header>
-        <img src="logo.png.png" alt="Logo UPTD SDN 21 SANGGALEA" class="logo-image">
+        <img src="logo.png.png" alt="Logo UPTD SDN 21 SANGGALEA" class="logo-image" onerror="this.style.display='none'">
         <h1>SPMB ONLINE</h1>
         <p>UPTD SDN 21 SANGGALEA</p>
     </header>
@@ -396,6 +440,19 @@
                 </div>
             </div>
 
+            <div class="peraturan-panel" style="margin-top: 2.5rem; padding: 2rem; border: 2px solid rgba(0, 247, 255, 0.4);">
+                <div class="section-title" style="margin-bottom: 0.5rem;"><i class="fas fa-download"></i> PUSAT UNDUH REGULASI (PUBLIK)</div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    Silakan unduh dokumen peraturan, juknis, dan formulir pendukung PPDB yang telah disediakan oleh panitia di bawah ini.
+                </p>
+                
+                <div id="tempat-download-regulasi" class="download-list">
+                    <p id="pesan-kosong" style="text-align: center; color: #64748b; font-style: italic; padding: 2rem; border: 1px dashed #334155; border-radius: 8px;">
+                        Belum ada dokumen regulasi yang dipublikasikan oleh Panitia Admin.
+                    </p>
+                </div>
+            </div>
+
             <div style="text-align: center; margin-top: 3.5rem;">
                 <button class="btn-submit" onclick="bukaFormPendaftaran()" style="display: inline-flex; width: auto; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-light), var(--accent));">
                     <i class="fas fa-rocket"></i> MULAI PENDAFTARAN
@@ -404,28 +461,21 @@
 
             <div class="upload-panel">
                 <div class="upload-panel-header">
-                    <i class="fas fa-file-upload"></i> PUSAT UNGGAH REGULASI & DASAR HUKUM (ADMIN)
+                    <i class="fas fa-user-shield"></i> PUSAT UNGGAH REGULASI (KHUSUS ADMIN)
                 </div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                    Gunakan fitur di bawah ini untuk mengunggah dokumen PDF/Docx terkait peraturan, petunjuk teknis, atau dasar hukum pelaksanaan PPDB/SPMB terbaru.
+                    (SIMULASI PROTOTIPE) Gunakan panel ini untuk mengunggah file. File yang diunggah akan langsung muncul di <strong>Pusat Unduh Regulasi</strong> di atas agar bisa di-download.
                 </p>
                 
                 <form id="formRegulasi" onsubmit="simulasikanUnggah(event)">
                     <div class="upload-grid">
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 1</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 2</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 3</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 4</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 5</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 6</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 7</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 8</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 9</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 10</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-alt"></i> Slot Dokumen 1</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-alt"></i> Slot Dokumen 2</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-alt"></i> Slot Dokumen 3</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx"></div>
                     </div>
 
                     <button type="submit" class="btn-submit" style="margin-top: 2rem; background: linear-gradient(135deg, var(--accent), #9d139b); border-radius: 12px; padding: 1.2rem;">
-                        <i class="fas fa-cloud-upload-alt"></i> SIMPAN & UNGGAH REGULASI
+                        <i class="fas fa-cloud-upload-alt"></i> UNGGAH & PUBLIKASIKAN KE PUBLIK
                     </button>
                 </form>
             </div>
@@ -454,14 +504,12 @@
 
                 <div class="form-section-card">
                     <div class="form-header"><i class="fas fa-user-graduate"></i> DATA PESERTA DIDIK</div>
-                    
                     <div class="form-row full">
                         <div class="form-group">
                             <label>Nama Lengkap</label>
                             <input type="text" required>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
                             <label>Tempat Lahir</label>
@@ -470,212 +518,6 @@
                         <div class="form-group">
                             <label>Tanggal Lahir</label>
                             <input type="date" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Jenis Kelamin</label>
-                            <select required>
-                                <option value="">PILIH</option>
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Agama</label>
-                            <select required>
-                                <option value="ISLAM">ISLAM</option>
-                                <option value="KRISTEN">KRISTEN</option>
-                                <option value="KATOLIK">KATOLIK</option>
-                                <option value="HINDU">HINDU</option>
-                                <option value="BUDDHA">BUDDHA</option>
-                                <option value="KONGHUCU">KONGHUCU</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Kewarganegaraan</label>
-                            <select required>
-                                <option value="WNI">WNI (Warga Negara Indonesia)</option>
-                                <option value="WNA">WNA (Warga Negara Asing)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Asal Sekolah (TK/RA/PAUD)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-
-                    <div class="form-subheader">Detail Alamat Tempat Tinggal</div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Jalan / Dusun</label>
-                            <input type="text" required>
-                        </div>
-                        <div class="form-group">
-                            <label>RT / RW</label>
-                            <input type="text" placeholder="Contoh: 001 / 002">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Kelurahan / Desa</label>
-                            <input type="text" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Kecamatan</label>
-                            <input type="text" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Kabupaten / Kota</label>
-                            <input type="text" value="MAROS" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Kode Pos</label>
-                            <input type="text">
-                        </div>
-                    </div>
-
-                    <div class="form-subheader">Legalitas & Dukungan</div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Moda Transportasi ke Sekolah</label>
-                            <select>
-                                <option value="JALAN KAKI">JALAN KAKI</option>
-                                <option value="KENDARAAN PRIBADI">KENDARAAN PRIBADI</option>
-                                <option value="ANGKUTAN UMUM">ANGKUTAN UMUM</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>No. Reg. Akta Kelahiran</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>No. ASKES / KIS / BPJS</label>
-                            <input type="text">
-                        </div>
-                        <div class="form-group">
-                            <label>No. KKS/KPS/PKH (Bila Ada)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>No. KITAS (Hanya WNA)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section-card">
-                    <div class="form-header"><i class="fas fa-users"></i> DATA ORANG TUA KANDUNG</div>
-                    
-                    <div class="form-subheader" style="background: rgba(79, 70, 229, 0.2); color: #818cf8;">A. DATA AYAH</div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Nama Lengkap Ayah</label>
-                            <input type="text" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Tahun Lahir</label>
-                            <input type="text" placeholder="YYYY" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Keadaan</label>
-                            <select>
-                                <option value="HIDUP">HIDUP</option>
-                                <option value="MENINGGAL">MENINGGAL</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Pendidikan Terakhir</label>
-                            <input type="text" placeholder="CONTOH: S1, SMA">
-                        </div>
-                        <div class="form-group">
-                            <label>Pekerjaan</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Penghasilan / Bulan</label>
-                            <select>
-                                <option value="< 1 JUTA">< 1 JUTA</option>
-                                <option value="1 - 3 JUTA">1 - 3 JUTA</option>
-                                <option value="> 3 JUTA">> 3 JUTA</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>No. Kontak / WA</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Alamat (Bila Beda Dengan Anak)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-
-                    <div class="form-subheader" style="background: rgba(226, 31, 223, 0.2); color: #f472b6;">B. DATA IBU</div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Nama Lengkap Ibu</label>
-                            <input type="text" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Tahun Lahir</label>
-                            <input type="text" placeholder="YYYY" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Keadaan</label>
-                            <select>
-                                <option value="HIDUP">HIDUP</option>
-                                <option value="MENINGGAL">MENINGGAL</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Pendidikan Terakhir</label>
-                            <input type="text" placeholder="CONTOH: S1, SMA">
-                        </div>
-                        <div class="form-group">
-                            <label>Pekerjaan</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Penghasilan / Bulan</label>
-                            <select>
-                                <option value="< 1 JUTA">< 1 JUTA</option>
-                                <option value="1 - 3 JUTA">1 - 3 JUTA</option>
-                                <option value="> 3 JUTA">> 3 JUTA</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>No. Kontak / WA</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Alamat (Bila Beda Dengan Anak)</label>
-                            <input type="text">
                         </div>
                     </div>
                 </div>
@@ -692,14 +534,6 @@
                         <input type="checkbox" id="chk-akta">
                         <label for="chk-akta">Fotokopi Akta Kelahiran (1 lembar)</label>
                     </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="chk-kk">
-                        <label for="chk-kk">Fotokopi Kartu Keluarga (1 lembar)</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="chk-kis">
-                        <label for="chk-kis">Fotokopi KIS/PIP/KPS (1 lembar, <i>opsional jika ada</i>)</label>
-                    </div>
                 </div>
 
                 <button type="submit" class="btn-submit" style="padding: 1.25rem; font-size: 1.1rem; border-radius: 12px; margin-bottom: 2rem;">
@@ -715,29 +549,24 @@
                     </p>
                     
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
-                        
-                        <a href="https://wa.me/6282348636763" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.15); transition: all 0.3s ease; color: var(--text-bright);" onmouseover="this.style.boxShadow='0 0 20px rgba(37, 211, 102, 0.4)'; this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 0 15px rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(0)';">
-                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366; text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);"></i>
+                        <a href="https://wa.me/6282348636763" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; color: var(--text-bright);">
+                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366;"></i>
                             <div style="text-align: left;">
-                                <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;">Ibu Linda</div>
+                                <div style="font-weight: 700; font-size: 1.05rem;">Ibu Linda</div>
                                 <div style="font-size: 0.85rem; color: #94a3b8;">0823-4863-6763</div>
                             </div>
                         </a>
-
-                        <a href="https://wa.me/6281907161756" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.15); transition: all 0.3s ease; color: var(--text-bright);" onmouseover="this.style.boxShadow='0 0 20px rgba(37, 211, 102, 0.4)'; this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 0 15px rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(0)';">
-                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366; text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);"></i>
+                        <a href="https://wa.me/6281907161756" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; color: var(--text-bright);">
+                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366;"></i>
                             <div style="text-align: left;">
-                                <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;">Ibu Tenri</div>
+                                <div style="font-weight: 700; font-size: 1.05rem;">Ibu Tenri</div>
                                 <div style="font-size: 0.85rem; color: #94a3b8;">0819-0716-1756</div>
                             </div>
                         </a>
-
                     </div>
                 </div>
-
             </form>
         </section>
-
     </div>
 
     <script>
@@ -753,29 +582,77 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // FUNGSI BARU: Simulasi Unggah dan Buat Tombol Download
         function simulasikanUnggah(event) {
-            // Mencegah halaman reload saat tombol submit ditekan
-            event.preventDefault(); 
+            event.preventDefault(); // Cegah halaman reload
             
             const form = document.getElementById('formRegulasi');
             const inputs = form.querySelectorAll('input[type="file"]');
+            const tempatDownload = document.getElementById('tempat-download-regulasi');
+            const pesanKosong = document.getElementById('pesan-kosong');
+            
             let adaFile = false;
+            let listHTMLBaru = '';
 
-            // Cek apakah ada file yang benar-benar dipilih
+            // Cek setiap kotak upload apakah ada file yang dipilih
             inputs.forEach(input => {
                 if (input.files.length > 0) {
                     adaFile = true;
+                    // Ambil file yang dipilih pengguna
+                    const file = input.files[0];
+                    
+                    // TRIK PROTOTIPE: Buat URL lokal di browser agar file bisa diunduh kembali
+                    const fileURL = URL.createObjectURL(file);
+                    
+                    // Hitung ukuran file (KB/MB)
+                    let ukuranFile = (file.size / 1024).toFixed(2) + ' KB';
+                    if (file.size > 1024 * 1024) {
+                        ukuranFile = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                    }
+
+                    // Tentukan Ikon berdasarkan ektensi file
+                    let ikon = 'fa-file-alt';
+                    if(file.name.endsWith('.pdf')) ikon = 'fa-file-pdf';
+                    if(file.name.endsWith('.doc') || file.name.endsWith('.docx')) ikon = 'fa-file-word';
+                    
+                    // Buat elemen visual untuk daftar unduhan
+                    listHTMLBaru += `
+                        <div class="download-item">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <i class="fas ${ikon}" style="font-size: 2rem; color: var(--accent);"></i>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 1rem; color: var(--text-bright);">${file.name}</div>
+                                    <div style="font-size: 0.8rem; color: var(--secondary);">Ukuran: ${ukuranFile}</div>
+                                </div>
+                            </div>
+                            <a href="${fileURL}" download="${file.name}" class="btn-download">
+                                <i class="fas fa-download"></i> UNDUH
+                            </a>
+                        </div>
+                    `;
                 }
             });
 
             if (adaFile) {
-                // Tampilkan notifikasi sukses
-                alert("Terkonfirmasi! Dokumen regulasi berhasil diunggah ke sistem prototipe.");
-                // Kosongkan kembali form setelah diunggah
+                // Sembunyikan teks "Belum ada regulasi"
+                if (pesanKosong) {
+                    pesanKosong.style.display = 'none';
+                }
+                
+                // Tambahkan file baru ke dalam Panel Unduh Publik
+                tempatDownload.innerHTML += listHTMLBaru;
+                
+                // Beri tahu admin bahwa berhasil
+                alert("BERHASIL! Regulasi telah diunggah dan kini dapat diunduh (didownload) oleh publik di atas.");
+                
+                // Kosongkan form kembali
                 form.reset();
+                
+                // Scroll otomatis ke atas (bagian download)
+                document.querySelector('.peraturan-panel').scrollIntoView({ behavior: 'smooth' });
+                
             } else {
-                // Peringatan jika admin memencet tombol tapi belum memilih file satupun
-                alert("Peringatan: Silakan pilih minimal satu file regulasi terlebih dahulu sebelum mengunggah.");
+                alert("Peringatan: Silakan pilih minimal satu dokumen dari komputer/HP Anda terlebih dahulu pada salah satu Slot Dokumen.");
             }
         }
     </script>
