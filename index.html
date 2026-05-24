@@ -6,6 +6,9 @@
     <title>SPMB Online - UPTD SDN 21 SANGGALEA</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             /* HIGH-TECH TECH PALETTE */
@@ -471,7 +474,7 @@
                     <i class="fas fa-user-shield"></i> PUSAT UNGGAH REGULASI (KHUSUS ADMIN)
                 </div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                    (SIMULASI PROTOTIPE) Gunakan panel ini untuk mengunggah file. File yang diunggah akan langsung muncul di <strong>Pusat Unduh Regulasi</strong> di atas agar bisa di-download.
+                    Gunakan panel ini untuk mengunggah file. File yang diunggah akan langsung tersimpan di Supabase dan muncul di <strong>Pusat Unduh Regulasi</strong>.
                 </p>
                 
                 <form id="formRegulasi" onsubmit="simulasikanUnggah(event)">
@@ -906,6 +909,15 @@
     </div>
 
     <script>
+        // =======================================================================
+        // KONFIGURASI SUPABASE (Ganti dengan Data Anda di Sini)
+        // =======================================================================
+        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
+        const supabaseKey = 'sb_publishable_adEJOOnDap9fscTjES1lZA_R6E0jBJC';
+        // =======================================================================
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
         function bukaFormPendaftaran() {
             document.getElementById('halaman-depan').style.display = 'none';
             document.getElementById('pendaftaran-section').style.display = 'block';
@@ -918,32 +930,38 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // FUNGSI SIMULASI UNGGAH & DOWNLOAD TETAP AMAN
-        function simulasikanUnggah(event) {
-            event.preventDefault(); // Cegah halaman reload
-            
-            const form = document.getElementById('formRegulasi');
-            const inputs = form.querySelectorAll('input[type="file"]');
+        // FUNGSI MEMUAT DAFTAR FILE DARI SUPABASE
+        async function muatDaftarFile() {
             const tempatDownload = document.getElementById('tempat-download-regulasi');
             const pesanKosong = document.getElementById('pesan-kosong');
-            
-            let adaFile = false;
-            let listHTMLBaru = '';
 
-            inputs.forEach(input => {
-                if (input.files.length > 0) {
-                    adaFile = true;
-                    const file = input.files[0];
-                    const fileURL = URL.createObjectURL(file);
+            const { data, error } = await supabase.storage.from('regulasi').list();
+
+            if (error) {
+                console.error('Gagal memuat file:', error);
+                if(pesanKosong) pesanKosong.innerHTML = 'Gagal terhubung ke server Supabase. Pastikan URL dan Key benar.';
+                return;
+            }
+
+            // Membuang file bawaan kosong dari Supabase
+            const files = data.filter(file => file.name !== '.emptyFolderPlaceholder');
+
+            if (files.length > 0) {
+                if (pesanKosong) pesanKosong.style.display = 'none';
+                let listHTMLBaru = '';
+
+                files.forEach(file => {
+                    const { data: publicUrlData } = supabase.storage.from('regulasi').getPublicUrl(file.name);
+                    const fileURL = publicUrlData.publicUrl;
                     
-                    let ukuranFile = (file.size / 1024).toFixed(2) + ' KB';
-                    if (file.size > 1024 * 1024) {
-                        ukuranFile = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                    let ukuranFile = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(2) + ' KB' : 'Tidak diketahui';
+                    if (file.metadata && file.metadata.size > 1024 * 1024) {
+                        ukuranFile = (file.metadata.size / (1024 * 1024)).toFixed(2) + ' MB';
                     }
 
                     let ikon = 'fa-file-alt';
-                    if(file.name.endsWith('.pdf')) ikon = 'fa-file-pdf';
-                    if(file.name.endsWith('.doc') || file.name.endsWith('.docx')) ikon = 'fa-file-word';
+                    if(file.name.toLowerCase().endsWith('.pdf')) ikon = 'fa-file-pdf';
+                    if(file.name.toLowerCase().endsWith('.doc') || file.name.toLowerCase().endsWith('.docx')) ikon = 'fa-file-word';
                     
                     listHTMLBaru += `
                         <div class="download-item">
@@ -954,26 +972,68 @@
                                     <div style="font-size: 0.8rem; color: var(--secondary);">Ukuran: ${ukuranFile}</div>
                                 </div>
                             </div>
-                            <a href="${fileURL}" download="${file.name}" class="btn-download">
+                            <a href="${fileURL}" target="_blank" class="btn-download">
                                 <i class="fas fa-download"></i> UNDUH
                             </a>
                         </div>
                     `;
+                });
+                tempatDownload.innerHTML = listHTMLBaru;
+            } else {
+                 if (pesanKosong) {
+                     pesanKosong.style.display = 'block';
+                     pesanKosong.innerHTML = 'Belum ada dokumen regulasi yang dipublikasikan oleh Panitia Admin.';
+                 }
+            }
+        }
+
+        // FUNGSI MENGUNGGAH KE SUPABASE
+        async function simulasikanUnggah(event) {
+            event.preventDefault(); // Cegah reload web
+            
+            const form = document.getElementById('formRegulasi');
+            const inputs = form.querySelectorAll('input[type="file"]');
+            const tombolSubmit = form.querySelector('button[type="submit"]');
+            const teksAsli = tombolSubmit.innerHTML;
+            
+            let adaFile = false;
+
+            tombolSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGUNGGAH...';
+            tombolSubmit.disabled = true;
+
+            for (let input of inputs) {
+                if (input.files.length > 0) {
+                    adaFile = true;
+                    const file = input.files[0];
+                    
+                    const { data, error } = await supabase.storage
+                        .from('regulasi')
+                        .upload(file.name, file, {
+                            cacheControl: '3600',
+                            upsert: true
+                        });
+
+                    if (error) {
+                        alert('Gagal mengunggah ' + file.name + ': ' + error.message);
+                    }
                 }
-            });
+            }
+
+            tombolSubmit.innerHTML = teksAsli;
+            tombolSubmit.disabled = false;
 
             if (adaFile) {
-                if (pesanKosong) pesanKosong.style.display = 'none';
-                
-                tempatDownload.innerHTML += listHTMLBaru;
-                alert("BERHASIL! Regulasi telah diunggah dan kini dapat diunduh oleh publik.");
+                alert("BERHASIL! Regulasi telah diunggah ke Supabase dan kini dapat diunduh oleh publik.");
                 form.reset();
+                muatDaftarFile(); // Memanggil ulang daftar file terbaru
                 document.querySelector('.peraturan-panel').scrollIntoView({ behavior: 'smooth' });
-                
             } else {
                 alert("Peringatan: Silakan pilih minimal satu dokumen dari komputer/HP Anda terlebih dahulu pada salah satu Slot Dokumen.");
             }
         }
+
+        // Jalankan fungsi memuat data ketika halaman pertama kali dibuka
+        window.onload = muatDaftarFile;
     </script>
 </body>
 </html>
