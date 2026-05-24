@@ -796,26 +796,43 @@
 
     </div>
 
-    <script>
+   <script>
         // =======================================================================
         // KONFIGURASI SUPABASE (PASTIKAN KUNCI SUDAH DIGANTI DENGAN "eyJ...")
         // =======================================================================
         const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
-        const supabaseKey = 'sb_publishable_adEJOOnDap9fscTjES1lZA_R6E0jBJC'; 
-        // =======================================================================
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5bGthc2lkZmJmaG93b3pjdWNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1OTc2ODAsImV4cCI6MjA5NTE3MzY4MH0.JGkdTtl3Nh1LcDeR_dzC1lMiA_IslkQQ3QJFtu3u07A'; 
         
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        // PELINDUNG: Menggunakan try-catch agar jika koneksi/key error, tombol navigasi tidak ikut macet
+        let supabase = null;
+        try {
+            if (window.supabase) {
+                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            } else {
+                console.error("SDK Supabase tidak terdeteksi. Pastikan script CDN Supabase sudah terpasang di atas.");
+            }
+        } catch (err) {
+            console.error("Gagal inisialisasi Supabase:", err);
+        }
 
+        // =======================================================================
+        // FUNGSI NAVIGASI HALAMAN (DIJAMIN 100% ANTI-MACET)
+        // =======================================================================
         function bukaFormPendaftaran() {
-            document.getElementById('halaman-depan').style.display = 'none';
-            document.getElementById('pendaftaran-section').style.display = 'block';
+            const halDepan = document.getElementById('halaman-depan');
+            const secDaftar = document.getElementById('pendaftaran-section');
+            if (halDepan) halDepan.style.display = 'none';
+            if (secDaftar) secDaftar.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function kembaliKeDepan() {
-            document.getElementById('pendaftaran-section').style.display = 'none';
-            document.getElementById('admin-dashboard-section').style.display = 'none';
-            document.getElementById('halaman-depan').style.display = 'block';
+            const secDaftar = document.getElementById('pendaftaran-section');
+            const secAdmin = document.getElementById('admin-dashboard-section');
+            const halDepan = document.getElementById('halaman-depan');
+            if (secDaftar) secDaftar.style.display = 'none';
+            if (secAdmin) secAdmin.style.display = 'none';
+            if (halDepan) halDepan.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -825,11 +842,16 @@
         async function kirimFormulir(event) {
             event.preventDefault();
 
+            if (!supabase) {
+                alert("Gagal Mengirim: Hubungan ke database belum siap. Mohon periksa kembali Kunci Supabase Anda.");
+                return;
+            }
+
             const btn = document.getElementById('btnKirimForm');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
             btn.disabled = true;
 
-            // Mengambil semua data dari inputan form
+            // Mengambil semua data dari inputan form sesuai kode asli Anda
             const dataSiswa = {
                 nik: document.getElementById('inp-nik').value,
                 nisn: document.getElementById('inp-nisn').value,
@@ -874,12 +896,13 @@
         // AKSES & GEBANG PASSWORD DASHBOARD ADMIN
         // =======================================================================
         function aksesDashboardAdmin() {
-            // Password bawaan sederhana, bisa Anda ganti sesuka hati
             const password = prompt("Masukkan Kata Sandi Panel Admin:");
             
             if (password === "admin21") { 
-                document.getElementById('halaman-depan').style.display = 'none';
-                document.getElementById('admin-dashboard-section').style.display = 'block';
+                const halDepan = document.getElementById('halaman-depan');
+                const secAdmin = document.getElementById('admin-dashboard-section');
+                if (halDepan) halDepan.style.display = 'none';
+                if (secAdmin) secAdmin.style.display = 'block';
                 muatDataPendaftar();
             } else if (password !== null) {
                 alert("Kata sandi salah! Akses ditolak.");
@@ -893,6 +916,13 @@
             const tbody = document.getElementById('tabel-data-pendaftar');
             const counter = document.getElementById('count-pendaftar');
 
+            if (!tbody) return;
+
+            if (!supabase) {
+                tbody.innerHTML = `<tr><td colspan="8" style="color:#ef4444;">Gagal mengambil data: Hubungan database terputus/belum siap.</td></tr>`;
+                return;
+            }
+
             try {
                 const { data, error } = await supabase
                     .from('pendaftaran')
@@ -904,7 +934,7 @@
                     return;
                 }
 
-                counter.innerText = data.length;
+                if (counter) counter.innerText = data.length;
 
                 if (data.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; font-style:italic;">Belum ada calon murid yang mendaftar.</td></tr>`;
@@ -943,9 +973,14 @@
         }
 
         // =======================================================================
-        // FITUR HAPUS DATA DATA PENDAFTAR
+        // FITUR HAPUS DATA DATA PENFAFTAR
         // =======================================================================
         async function hapusPendaftar(id, nama) {
+            if (!supabase) {
+                alert("Gagal menghapus: Koneksi ke database tidak aktif.");
+                return;
+            }
+
             if (confirm(`Apakah Anda yakin ingin menghapus data calon murid bernama "${nama}" dari sistem?`)) {
                 const { error } = await supabase
                     .from('pendaftaran')
@@ -967,6 +1002,13 @@
         async function muatDaftarFile() {
             const tempatDownload = document.getElementById('tempat-download-regulasi');
             const pesanKosong = document.getElementById('pesan-kosong');
+
+            if (!tempatDownload) return;
+
+            if (!supabase) {
+                if (pesanKosong) pesanKosong.innerHTML = 'Gagal memuat file: Hubungan database terputus/belum siap.';
+                return;
+            }
 
             try {
                 const { data, error } = await supabase.storage.from('regulasi').list();
@@ -1025,6 +1067,11 @@
         async function simulasikanUnggah(event) {
             event.preventDefault(); 
             
+            if (!supabase) {
+                alert("Gagal mengunggah: Hubungan database terputus/belum siap.");
+                return;
+            }
+            
             const form = document.getElementById('formRegulasi');
             const inputs = form.querySelectorAll('input[type="file"]');
             const tombolSubmit = form.querySelector('button[type="submit"]');
@@ -1035,33 +1082,37 @@
             tombolSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGUNGGAH...';
             tombolSubmit.disabled = true;
 
-            for (let input of inputs) {
-                if (input.files.length > 0) {
-                    adaFile = true;
-                    const file = input.files[0];
-                    
-                    const { data, error } = await supabase.storage
-                        .from('regulasi')
-                        .upload(file.name, file, {
-                            cacheControl: '3600',
-                            upsert: true
-                        });
+            try {
+                for (let input of inputs) {
+                    if (input.files.length > 0) {
+                        adaFile = true;
+                        const file = input.files[0];
+                        
+                        const { data, error } = await supabase.storage
+                            .from('regulasi')
+                            .upload(file.name, file, {
+                                cacheControl: '3600',
+                                upsert: true
+                            });
 
-                    if (error) {
-                        alert('Gagal mengunggah ' + file.name + ': ' + error.message);
+                        if (error) {
+                            alert('Gagal mengunggah ' + file.name + ': ' + error.message);
+                        }
                     }
                 }
-            }
 
-            tombolSubmit.innerHTML = teksAsli;
-            tombolSubmit.disabled = false;
-
-            if (adaFile) {
-                alert("BERHASIL! Regulasi telah diunggah ke Supabase.");
-                form.reset();
-                muatDaftarFile(); 
-            } else {
-                alert("Peringatan: Silakan pilih minimal satu dokumen terlebih dahulu.");
+                if (adaFile) {
+                    alert("BERHASIL! Regulasi telah diunggah ke Supabase.");
+                    form.reset();
+                    muatDaftarFile(); 
+                } else {
+                    alert("Peringatan: Silakan pilih minimal satu dokumen terlebih dahulu.");
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                tombolSubmit.innerHTML = teksAsli;
+                tombolSubmit.disabled = false;
             }
         }
 
