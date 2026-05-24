@@ -910,10 +910,10 @@
 
     <script>
         // =======================================================================
-        // KONFIGURASI SUPABASE (Ganti dengan Data Anda di Sini)
+        // PASTIKAN TANDA KUTIP TUNGGAL (') DI AWAL DAN AKHIR JANGAN SAMPAI TERHAPUS!
         // =======================================================================
-        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
-        const supabaseKey = 'sb_publishable_adEJOOnDap9fscTjES1lZA_R6E0jBJC';
+        const supabaseUrl = 'MASUKKAN_URL_PROJECT_ANDA_DI_SINI';
+        const supabaseKey = 'MASUKKAN_PUBLISHABLE_KEY_ANDA_DI_SINI';
         // =======================================================================
         
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -930,66 +930,67 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // FUNGSI MEMUAT DAFTAR FILE DARI SUPABASE
         async function muatDaftarFile() {
             const tempatDownload = document.getElementById('tempat-download-regulasi');
             const pesanKosong = document.getElementById('pesan-kosong');
 
-            const { data, error } = await supabase.storage.from('regulasi').list();
+            try {
+                const { data, error } = await supabase.storage.from('regulasi').list();
 
-            if (error) {
-                console.error('Gagal memuat file:', error);
-                if(pesanKosong) pesanKosong.innerHTML = 'Gagal terhubung ke server Supabase. Pastikan URL dan Key benar.';
-                return;
-            }
+                if (error) {
+                    console.error('Gagal memuat file:', error);
+                    if(pesanKosong) pesanKosong.innerHTML = 'Gagal terhubung ke server Supabase. Pastikan URL dan Key benar, serta Policy sudah diatur menjadi "anon".';
+                    return;
+                }
 
-            // Membuang file bawaan kosong dari Supabase
-            const files = data.filter(file => file.name !== '.emptyFolderPlaceholder');
+                const files = data.filter(file => file.name !== '.emptyFolderPlaceholder');
 
-            if (files.length > 0) {
-                if (pesanKosong) pesanKosong.style.display = 'none';
-                let listHTMLBaru = '';
+                if (files.length > 0) {
+                    if (pesanKosong) pesanKosong.style.display = 'none';
+                    let listHTMLBaru = '';
 
-                files.forEach(file => {
-                    const { data: publicUrlData } = supabase.storage.from('regulasi').getPublicUrl(file.name);
-                    const fileURL = publicUrlData.publicUrl;
-                    
-                    let ukuranFile = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(2) + ' KB' : 'Tidak diketahui';
-                    if (file.metadata && file.metadata.size > 1024 * 1024) {
-                        ukuranFile = (file.metadata.size / (1024 * 1024)).toFixed(2) + ' MB';
-                    }
+                    files.forEach(file => {
+                        const { data: publicUrlData } = supabase.storage.from('regulasi').getPublicUrl(file.name);
+                        const fileURL = publicUrlData.publicUrl;
+                        
+                        let ukuranFile = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(2) + ' KB' : 'Tidak diketahui';
+                        if (file.metadata && file.metadata.size > 1024 * 1024) {
+                            ukuranFile = (file.metadata.size / (1024 * 1024)).toFixed(2) + ' MB';
+                        }
 
-                    let ikon = 'fa-file-alt';
-                    if(file.name.toLowerCase().endsWith('.pdf')) ikon = 'fa-file-pdf';
-                    if(file.name.toLowerCase().endsWith('.doc') || file.name.toLowerCase().endsWith('.docx')) ikon = 'fa-file-word';
-                    
-                    listHTMLBaru += `
-                        <div class="download-item">
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <i class="fas ${ikon}" style="font-size: 2rem; color: var(--accent);"></i>
-                                <div>
-                                    <div style="font-weight: 700; font-size: 1rem; color: var(--text-bright);">${file.name}</div>
-                                    <div style="font-size: 0.8rem; color: var(--secondary);">Ukuran: ${ukuranFile}</div>
+                        let ikon = 'fa-file-alt';
+                        if(file.name.toLowerCase().endsWith('.pdf')) ikon = 'fa-file-pdf';
+                        if(file.name.toLowerCase().endsWith('.doc') || file.name.toLowerCase().endsWith('.docx')) ikon = 'fa-file-word';
+                        
+                        listHTMLBaru += `
+                            <div class="download-item">
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <i class="fas ${ikon}" style="font-size: 2rem; color: var(--accent);"></i>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 1rem; color: var(--text-bright);">${file.name}</div>
+                                        <div style="font-size: 0.8rem; color: var(--secondary);">Ukuran: ${ukuranFile}</div>
+                                    </div>
                                 </div>
+                                <a href="${fileURL}" target="_blank" class="btn-download">
+                                    <i class="fas fa-download"></i> UNDUH
+                                </a>
                             </div>
-                            <a href="${fileURL}" target="_blank" class="btn-download">
-                                <i class="fas fa-download"></i> UNDUH
-                            </a>
-                        </div>
-                    `;
-                });
-                tempatDownload.innerHTML = listHTMLBaru;
-            } else {
-                 if (pesanKosong) {
-                     pesanKosong.style.display = 'block';
-                     pesanKosong.innerHTML = 'Belum ada dokumen regulasi yang dipublikasikan oleh Panitia Admin.';
-                 }
+                        `;
+                    });
+                    tempatDownload.innerHTML = listHTMLBaru;
+                } else {
+                     if (pesanKosong) {
+                         pesanKosong.style.display = 'block';
+                         pesanKosong.innerHTML = 'Belum ada dokumen regulasi yang dipublikasikan oleh Panitia Admin.';
+                     }
+                }
+            } catch (err) {
+                console.error("Terjadi kesalahan sistem:", err);
             }
         }
 
-        // FUNGSI MENGUNGGAH KE SUPABASE
         async function simulasikanUnggah(event) {
-            event.preventDefault(); // Cegah reload web
+            event.preventDefault(); 
             
             const form = document.getElementById('formRegulasi');
             const inputs = form.querySelectorAll('input[type="file"]');
@@ -1025,14 +1026,13 @@
             if (adaFile) {
                 alert("BERHASIL! Regulasi telah diunggah ke Supabase dan kini dapat diunduh oleh publik.");
                 form.reset();
-                muatDaftarFile(); // Memanggil ulang daftar file terbaru
+                muatDaftarFile(); 
                 document.querySelector('.peraturan-panel').scrollIntoView({ behavior: 'smooth' });
             } else {
                 alert("Peringatan: Silakan pilih minimal satu dokumen dari komputer/HP Anda terlebih dahulu pada salah satu Slot Dokumen.");
             }
         }
 
-        // Jalankan fungsi memuat data ketika halaman pertama kali dibuka
         window.onload = muatDaftarFile;
     </script>
 </body>
