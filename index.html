@@ -116,7 +116,7 @@
         }
 
         /* CARD & PANEL STYLES */
-        .visi-sekolah-section, .card, .peraturan-panel {
+        .visi-sekolah-section, .card, .peraturan-panel, .dashboard-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
@@ -280,7 +280,7 @@
         }
 
         /* ADVANCED FORM STYLING */
-        #pendaftaran-section { display: none; margin-top: 1rem; animation: fadeIn 0.5s ease; }
+        #pendaftaran-section, #admin-dashboard-section { display: none; margin-top: 1rem; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .form-section-card {
@@ -413,6 +413,63 @@
         }
         .back-btn:hover { color: var(--text-bright); background: rgba(255,255,255,0.1); }
 
+        /* TABLE TECH STYLING FOR ADMIN */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-tech);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .admin-table th {
+            background-color: rgba(79, 70, 229, 0.3);
+            color: var(--secondary);
+            padding: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            border-bottom: 2px solid var(--border-tech);
+        }
+
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-tech);
+            color: var(--text-muted);
+        }
+
+        .admin-table tr:hover {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .badge-count {
+            background: var(--accent);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 800;
+            box-shadow: var(--glow-magenta);
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-delete:hover { background: #b91c1c; }
+
     </style>
 </head>
 <body>
@@ -464,17 +521,17 @@
             </div>
 
             <div style="text-align: center; margin-top: 3.5rem;">
-                <button type="button" class="btn-submit" onclick="bukaFormPendaftaran()" style="display: inline-flex; width: auto; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-light), var(--accent));">
+                <button class="btn-submit" onclick="bukaFormPendaftaran()" style="display: inline-flex; width: auto; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-light), var(--accent));">
                     <i class="fas fa-rocket"></i> MULAI PENDAFTARAN
                 </button>
             </div>
 
             <div class="upload-panel">
                 <div class="upload-panel-header">
-                    <i class="fas fa-user-shield"></i> PUSAT UNGGAH REGULASI (KHUSUS ADMIN)
+                    <i class="fas fa-user-shield"></i> PUSAT PANEL KONTROL (KHUSUS ADMIN)
                 </div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                    Gunakan panel ini untuk mengunggah file. File yang diunggah akan langsung tersimpan di Supabase dan muncul di <strong>Pusat Unduh Regulasi</strong>.
+                    Gunakan panel ini untuk mengunggah berkas regulasi publik atau membuka Dashboard Rekapitulasi Calon Murid Baru.
                 </p>
                 
                 <form id="formRegulasi" onsubmit="simulasikanUnggah(event)">
@@ -488,25 +545,29 @@
                         <i class="fas fa-cloud-upload-alt"></i> UNGGAH & PUBLIKASIKAN KE PUBLIK
                     </button>
                 </form>
+
+                <button onclick="aksesDashboardAdmin()" class="btn-submit" style="margin-top: 1.5rem; background: linear-gradient(135deg, #0284c7, #0369a1); border-radius: 12px; padding: 1.2rem;">
+                    <i class="fas fa-chart-line"></i> MASUK DASHBOARD DATA CALON MURID
+                </button>
             </div>
 
         </div>
 
         <section id="pendaftaran-section">
-            <button type="button" class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <button class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Kembali</button>
             
-            <form action="#" method="POST">
+            <form id="formPendaftaranSiswa" onsubmit="kirimFormulir(event)">
                 
                 <div class="form-section-card">
                     <div class="form-header"><i class="fas fa-id-card"></i> DATA PENDAFTARAN</div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>NIK Anak (16 Digit)</label>
-                            <input type="text" required>
+                            <input type="text" id="inp-nik" required>
                         </div>
                         <div class="form-group">
                             <label>NISN (Jika Ada)</label>
-                            <input type="text">
+                            <input type="text" id="inp-nisn">
                         </div>
                     </div>
                     <span class="info-text">*Nomor Pendaftaran akan digenerate otomatis oleh sistem setelah formulir dikirim.</span>
@@ -518,33 +579,33 @@
                     <div class="form-row full">
                         <div class="form-group">
                             <label>Nama Lengkap</label>
-                            <input type="text" required>
+                            <input type="text" id="inp-nama" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label>Tempat Lahir</label>
-                            <input type="text" required>
+                            <input type="text" id="inp-tempat-lahir" required>
                         </div>
                         <div class="form-group">
                             <label>Tanggal Lahir</label>
-                            <input type="date" required>
+                            <input type="date" id="inp-tanggal-lahir" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
-                            <select required>
+                            <select id="inp-jk" required>
                                 <option value="">PILIH</option>
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Agama</label>
-                            <select required>
+                            <select id="inp-agama" required>
                                 <option value="ISLAM">ISLAM</option>
                                 <option value="KRISTEN">KRISTEN</option>
                                 <option value="KATOLIK">KATOLIK</option>
@@ -565,7 +626,7 @@
                         </div>
                         <div class="form-group">
                             <label>Asal Sekolah (TK/RA/PAUD)</label>
-                            <input type="text">
+                            <input type="text" id="inp-asal-sekolah">
                         </div>
                     </div>
 
@@ -573,11 +634,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Jalan / Dusun</label>
-                            <input type="text" required>
+                            <input type="text" id="inp-jalan" required>
                         </div>
                         <div class="form-group">
                             <label>RT / RW & Lingkungan</label>
-                            <select required>
+                            <select id="inp-rtrw" required>
                                 <option value="">-- Pilih RT/RW --</option>
                                 <optgroup label="Kelurahan Adatongeng">
                                     <option value="RW 004 ling. bonto puasa">RW 004 ling. bonto puasa</option>
@@ -597,11 +658,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Kelurahan / Desa</label>
-                            <input type="text" required>
+                            <input type="text" id="inp-kelurahan" required>
                         </div>
                         <div class="form-group">
                             <label>Kecamatan</label>
-                            <input type="text" required>
+                            <input type="text" id="inp-kecamatan" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -630,22 +691,6 @@
                             <input type="text">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>No. ASKES / KIS / BPJS</label>
-                            <input type="text">
-                        </div>
-                        <div class="form-group">
-                            <label>No. KKS/KPS/PKH (Bila Ada)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>No. KITAS (Hanya WNA)</label>
-                            <input type="text">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="form-section-card">
@@ -655,30 +700,7 @@
                     <div class="form-row full">
                         <div class="form-group">
                             <label>Nama Lengkap Ayah</label>
-                            <input type="text" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Tahun Lahir</label>
-                            <input type="text" placeholder="YYYY" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Keadaan</label>
-                            <select>
-                                <option value="HIDUP">HIDUP</option>
-                                <option value="MENINGGAL">MENINGGAL</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Pendidikan Terakhir</label>
-                            <input type="text" placeholder="CONTOH: S1, SMA">
-                        </div>
-                        <div class="form-group">
-                            <label>Pekerjaan</label>
-                            <input type="text">
+                            <input type="text" id="inp-ayah" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -691,14 +713,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>No. Kontak / WA</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Alamat (Bila Beda Dengan Anak)</label>
-                            <input type="text">
+                            <label>No. Kontak / WA Ayah</label>
+                            <input type="text" id="inp-wa-ayah">
                         </div>
                     </div>
 
@@ -706,30 +722,7 @@
                     <div class="form-row full">
                         <div class="form-group">
                             <label>Nama Lengkap Ibu</label>
-                            <input type="text" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Tahun Lahir</label>
-                            <input type="text" placeholder="YYYY" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Keadaan</label>
-                            <select>
-                                <option value="HIDUP">HIDUP</option>
-                                <option value="MENINGGAL">MENINGGAL</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Pendidikan Terakhir</label>
-                            <input type="text" placeholder="CONTOH: S1, SMA">
-                        </div>
-                        <div class="form-group">
-                            <label>Pekerjaan</label>
-                            <input type="text">
+                            <input type="text" id="inp-ibu" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -742,228 +735,245 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>No. Kontak / WA</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Alamat (Bila Beda Dengan Anak)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section-card">
-                    <div class="form-header"><i class="fas fa-user-shield"></i> DATA WALI (OPSIONAL)</div>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; margin-top: -0.5rem;">Hanya diisi jika anak tinggal bersama wali (bukan orang tua kandung).</p>
-                    
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Nama Wali (Sesuai KTP)</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Tahun Lahir</label>
-                            <input type="text" placeholder="YYYY">
-                        </div>
-                        <div class="form-group">
-                            <label>Pendidikan Terakhir</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Pekerjaan</label>
-                            <input type="text">
-                        </div>
-                        <div class="form-group">
-                            <label>Penghasilan</label>
-                            <select>
-                                <option value="">PILIH</option>
-                                <option value="< 1 JUTA">< 1 JUTA</option>
-                                <option value="1 - 3 JUTA">1 - 3 JUTA</option>
-                                <option value="> 3 JUTA">> 3 JUTA</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>No. Kontak</label>
-                            <input type="text">
-                        </div>
-                        <div class="form-group">
-                            <label>Kontak Alternatif</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Alamat Wali</label>
-                            <input type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section-card">
-                    <div class="form-header"><i class="fas fa-chart-bar"></i> DATA PERIODIK PESERTA DIDIK</div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Tinggi Badan (CM)</label>
-                            <input type="number">
-                        </div>
-                        <div class="form-group">
-                            <label>Berat Badan (KG)</label>
-                            <input type="number">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Jarak Ke Sekolah (KM)</label>
-                            <input type="number" step="0.1">
-                        </div>
-                        <div class="form-group">
-                            <label>Waktu Tempuh (Menit)</label>
-                            <input type="number">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Anak Ke-</label>
-                            <input type="number">
-                        </div>
-                        <div class="form-group">
-                            <label>Jml Saudara Kandung</label>
-                            <input type="number">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Jml Anggota Di Rumah</label>
-                            <input type="number" placeholder="Termasuk anak">
+                            <label>No. Kontak / WA Ibu</label>
+                            <input type="text" id="inp-wa-ibu">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-section-card">
                     <div class="form-header"><i class="fas fa-file-alt"></i> KELENGKAPAN PERSYARATAN</div>
-                    <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-muted);">Dengan mencentang kotak di bawah ini, saya bersedia membawa berkas fisik berikut saat verifikasi/daftar ulang ke sekolah:</p>
-                    
                     <div class="checkbox-group">
-                        <input type="checkbox" id="chk-foto">
-                        <label for="chk-foto">Pas foto warna ukuran 3x4 (2 lembar)</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="chk-akta">
-                        <label for="chk-akta">Fotokopi Akta Kelahiran (1 lembar)</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="chk-kk">
-                        <label for="chk-kk">Fotokopi Kartu Keluarga (1 lembar)</label>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="chk-kis">
-                        <label for="chk-kis">Fotokopi KIS/PIP/KPS (1 lembar, <i>opsional jika ada</i>)</label>
+                        <input type="checkbox" id="chk-foto" required>
+                        <label for="chk-foto">Saya bersedia melengkapi berkas persyaratan fisik saat verifikasi luring.</label>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit" style="padding: 1.25rem; font-size: 1.1rem; border-radius: 12px; margin-bottom: 2rem;">
+                <button type="submit" id="btnKirimForm" class="btn-submit" style="padding: 1.25rem; font-size: 1.1rem; border-radius: 12px; margin-bottom: 2rem;">
                     <i class="fas fa-paper-plane"></i> KIRIM FORMULIR PENDAFTARAN
                 </button>
-
-                <div class="form-section-card" style="text-align: center; padding: 3rem 2rem; margin-top: 2.5rem; border: 2px solid rgba(0, 247, 255, 0.3); box-shadow: var(--shadow-lg);">
-                    <div class="form-header" style="justify-content: center; border: none; margin-bottom: 0.5rem;">
-                        <i class="fas fa-headset" style="color: var(--secondary); text-shadow: var(--glow-cyan);"></i> LOKET INFORMASI & KONTAK
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">
-                        Mengalami kendala saat mendaftar? Silakan hubungi panitia PPDB kami melalui WhatsApp di bawah ini.
-                    </p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
-                        
-                        <a href="https://wa.me/6282348636763" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.15); transition: all 0.3s ease; color: var(--text-bright);" onmouseover="this.style.boxShadow='0 0 20px rgba(37, 211, 102, 0.4)'; this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 0 15px rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(0)';">
-                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366; text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);"></i>
-                            <div style="text-align: left;">
-                                <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;">Ibu Linda</div>
-                                <div style="font-size: 0.85rem; color: #94a3b8;">0823-4863-6763</div>
-                            </div>
-                        </a>
-
-                        <a href="https://wa.me/6281907161756" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.15); transition: all 0.3s ease; color: var(--text-bright);" onmouseover="this.style.boxShadow='0 0 20px rgba(37, 211, 102, 0.4)'; this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 0 15px rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(0)';">
-                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366; text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);"></i>
-                            <div style="text-align: left;">
-                                <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;">Ibu Tenri</div>
-                                <div style="font-size: 0.85rem; color: #94a3b8;">0819-0716-1756</div>
-                            </div>
-                        </a>
-
-                    </div>
-                </div>
-
             </form>
+        </section>
+
+        <section id="admin-dashboard-section">
+            <button class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Keluar Dashboard</button>
+            
+            <div class="form-section-card" style="border: 2px solid var(--secondary); box-shadow: var(--glow-cyan);">
+                <div class="form-header" style="justify-content: space-between;">
+                    <span><i class="fas fa-database"></i> REKAPITULASI CALON MURID BARU</span>
+                    <div>Total Pendaftar: <span id="count-pendaftar" class="badge-count">0</span></div>
+                </div>
+                
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Berikut adalah seluruh berkas isian formulir siswa yang masuk secara real-time dari website.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Lengkap</th>
+                                <th>NIK</th>
+                                <th>JK</th>
+                                <th>TTL</th>
+                                <th>RT/RW Lingkungan</th>
+                                <th>Orang Tua (WA)</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-data-pendaftar">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #64748b; font-style: italic; padding: 2rem;">
+                                    Memuat data pendaftar...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
     </div>
 
     <script>
         // =======================================================================
-        // 1. FUNGSI NAVIGASI TOMBOL (AMAK & PASTI JALAN)
+        // KONFIGURASI SUPABASE (PASTIKAN KUNCI SUDAH DIGANTI DENGAN "eyJ...")
         // =======================================================================
-        // Fungsi ini sengaja dideklarasikan ke Window secara langsung 
-        // agar tidak bisa dimatikan oleh error apapun dari script lain.
-        window.bukaFormPendaftaran = function() {
+        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
+        const supabaseKey = 'sb_publishable_adEJOOnDap9fscTjES1lZA_R6E0jBJC'; 
+        // =======================================================================
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        function bukaFormPendaftaran() {
             document.getElementById('halaman-depan').style.display = 'none';
             document.getElementById('pendaftaran-section').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        }
 
-        window.kembaliKeDepan = function() {
+        function kembaliKeDepan() {
             document.getElementById('pendaftaran-section').style.display = 'none';
+            document.getElementById('admin-dashboard-section').style.display = 'none';
             document.getElementById('halaman-depan').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        // =======================================================================
-        // 2. KONFIGURASI SUPABASE (HARAP GANTI KUNCI YANG BENAR)
-        // =======================================================================
-        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
-        
-        // PENTING: Kunci di bawah ini SALAH. Anda harus mencari kunci yang
-        // berawalan tulisan "eyJ...". Jangan gunakan sb_publishable.
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5bGthc2lkZmJmaG93b3pjdWNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1OTc2ODAsImV4cCI6MjA5NTE3MzY4MH0.JGkdTtl3Nh1LcDeR_dzC1lMiA_IslkQQ3QJFtu3u07A';
-        // =======================================================================
-        
-        let clientSupabase = null;
-        try {
-            // Kita bungkus pemanggilan Supabase agar jika kuncinya salah,
-            // halaman web tidak ikut hancur.
-            if (window.supabase) {
-                clientSupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-            }
-        } catch (error) {
-            console.error("Gagal terhubung ke Supabase. Kunci mungkin salah format.", error);
         }
 
         // =======================================================================
-        // 3. FUNGSI MENGAMBIL DAFTAR REGULASI
+        // PROSES KIRIM FORMULIR KE DATABASE SUPABASE
+        // =======================================================================
+        async function kirimFormulir(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('btnKirimForm');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
+            btn.disabled = true;
+
+            // Mengambil semua data dari inputan form
+            const dataSiswa = {
+                nik: document.getElementById('inp-nik').value,
+                nisn: document.getElementById('inp-nisn').value,
+                nama: document.getElementById('inp-nama').value,
+                tempat_lahir: document.getElementById('inp-tempat-lahir').value,
+                tanggal_lahir: document.getElementById('inp-tanggal-lahir').value,
+                jenis_kelamin: document.getElementById('inp-jk').value,
+                agama: document.getElementById('inp-agama').value,
+                asal_sekolah: document.getElementById('inp-asal-sekolah').value,
+                jalan_dusun: document.getElementById('inp-jalan').value,
+                rt_rw: document.getElementById('inp-rtrw').value,
+                kelurahan: document.getElementById('inp-kelurahan').value,
+                kecamatan: document.getElementById('inp-kecamatan').value,
+                nama_ayah: document.getElementById('inp-ayah').value,
+                wa_ayah: document.getElementById('inp-wa-ayah').value,
+                nama_ibu: document.getElementById('inp-ibu').value,
+                wa_ibu: document.getElementById('inp-wa-ibu').value
+            };
+
+            try {
+                const { data, error } = await supabase
+                    .from('pendaftaran')
+                    .insert([dataSiswa]);
+
+                if (error) {
+                    alert("Gagal Mengirim: " + error.message);
+                } else {
+                    alert("Selamat! Formulir pendaftaran " + dataSiswa.nama + " BERHASIL terkirim dan disimpan di sistem.");
+                    document.getElementById('formPendaftaranSiswa').reset();
+                    kembaliKeDepan();
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Terjadi masalah jaringan.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM FORMULIR PENDAFTARAN';
+                btn.disabled = false;
+            }
+        }
+
+        // =======================================================================
+        // AKSES & GEBANG PASSWORD DASHBOARD ADMIN
+        // =======================================================================
+        function aksesDashboardAdmin() {
+            // Password bawaan sederhana, bisa Anda ganti sesuka hati
+            const password = prompt("Masukkan Kata Sandi Panel Admin:");
+            
+            if (password === "admin21") { 
+                document.getElementById('halaman-depan').style.display = 'none';
+                document.getElementById('admin-dashboard-section').style.display = 'block';
+                muatDataPendaftar();
+            } else if (password !== null) {
+                alert("Kata sandi salah! Akses ditolak.");
+            }
+        }
+
+        // =======================================================================
+        // LOAD DATA PENDAFTAR DARI DATABASE KE DASHBOARD
+        // =======================================================================
+        async function muatDataPendaftar() {
+            const tbody = document.getElementById('tabel-data-pendaftar');
+            const counter = document.getElementById('count-pendaftar');
+
+            try {
+                const { data, error } = await supabase
+                    .from('pendaftaran')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    tbody.innerHTML = `<tr><td colspan="8" style="color:#ef4444;">Gagal mengambil data: ${error.message}</td></tr>`;
+                    return;
+                }
+
+                counter.innerText = data.length;
+
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; font-style:italic;">Belum ada calon murid yang mendaftar.</td></tr>`;
+                    return;
+                }
+
+                let htmlContent = '';
+                data.forEach((siswa, index) => {
+                    const tglLahirFormatted = siswa.tanggal_lahir ? siswa.tanggal_lahir.split('-').reverse().join('/') : '-';
+                    htmlContent += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td style="color:var(--text-bright); font-weight:600;">${siswa.nama}</td>
+                            <td>${siswa.nik}</td>
+                            <td>${siswa.jenis_kelamin === 'Laki-laki' ? 'L' : 'P'}</td>
+                            <td>${siswa.tempat_lahir}, ${tglLahirFormatted}</td>
+                            <td>${siswa.rt_rw}</td>
+                            <td>
+                                Ayah: ${siswa.nama_ayah} (${siswa.wa_ayah || '-'})<br>
+                                Ibu: ${siswa.nama_ibu} (${siswa.wa_ibu || '-'})
+                            </td>
+                            <td>
+                                <button class="btn-delete" onclick="hapusPendaftar(${siswa.id}, '${siswa.nama}')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = htmlContent;
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="8" style="color:#ef4444;">Terjadi kesalahan sistem.</td></tr>`;
+            }
+        }
+
+        // =======================================================================
+        // FITUR HAPUS DATA DATA PENDAFTAR
+        // =======================================================================
+        async function hapusPendaftar(id, nama) {
+            if (confirm(`Apakah Anda yakin ingin menghapus data calon murid bernama "${nama}" dari sistem?`)) {
+                const { error } = await supabase
+                    .from('pendaftaran')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) {
+                    alert("Gagal menghapus: " + error.message);
+                } else {
+                    alert("Data berhasil dihapus.");
+                    muatDataPendaftar(); // Refresh tabel admin
+                }
+            }
+        }
+
+        // =======================================================================
+        // REGULASI STORAGE MANAGEMENT (BAWAAN SEBELUMNYA)
         // =======================================================================
         async function muatDaftarFile() {
             const tempatDownload = document.getElementById('tempat-download-regulasi');
             const pesanKosong = document.getElementById('pesan-kosong');
 
-            if (!clientSupabase) {
-                if(pesanKosong) pesanKosong.innerHTML = 'Supabase belum dihubungkan. Pastikan Kunci (Key) Anda berawalan huruf "eyJ...".';
-                return;
-            }
-
             try {
-                const { data, error } = await clientSupabase.storage.from('regulasi').list();
+                const { data, error } = await supabase.storage.from('regulasi').list();
 
                 if (error) {
-                    if(pesanKosong) pesanKosong.innerHTML = 'Gagal mengakses penyimpanan Supabase. Pastikan Kunci (Key) berawalan "eyJ..." dan Policy (Izin Akses) sudah dicentang/diatur.';
+                    console.error('Gagal memuat file:', error);
+                    if(pesanKosong) pesanKosong.innerHTML = 'Gagal terhubung ke server Supabase. Pastikan URL dan Key benar.';
                     return;
                 }
 
@@ -974,7 +984,7 @@
                     let listHTMLBaru = '';
 
                     files.forEach(file => {
-                        const { data: publicUrlData } = clientSupabase.storage.from('regulasi').getPublicUrl(file.name);
+                        const { data: publicUrlData } = supabase.storage.from('regulasi').getPublicUrl(file.name);
                         const fileURL = publicUrlData.publicUrl;
                         
                         let ukuranFile = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(2) + ' KB' : 'Tidak diketahui';
@@ -1005,25 +1015,16 @@
                 } else {
                      if (pesanKosong) {
                          pesanKosong.style.display = 'block';
-                         pesanKosong.innerHTML = 'Belum ada dokumen regulasi yang dipublikasikan oleh Panitia Admin.';
                      }
                 }
             } catch (err) {
-                console.error("Terjadi kesalahan sistem saat memuat dokumen:", err);
+                console.error("Terjadi kesalahan sistem:", err);
             }
         }
 
-        // =======================================================================
-        // 4. FUNGSI UNTUK ADMIN MENGUNGGAH REGULASI
-        // =======================================================================
         async function simulasikanUnggah(event) {
             event.preventDefault(); 
             
-            if (!clientSupabase) {
-                alert("Peringatan: Supabase gagal terhubung karena Kunci (Key) Anda tidak valid (bukan berawalan eyJ...).");
-                return;
-            }
-
             const form = document.getElementById('formRegulasi');
             const inputs = form.querySelectorAll('input[type="file"]');
             const tombolSubmit = form.querySelector('button[type="submit"]');
@@ -1039,7 +1040,7 @@
                     adaFile = true;
                     const file = input.files[0];
                     
-                    const { data, error } = await clientSupabase.storage
+                    const { data, error } = await supabase.storage
                         .from('regulasi')
                         .upload(file.name, file, {
                             cacheControl: '3600',
@@ -1056,16 +1057,14 @@
             tombolSubmit.disabled = false;
 
             if (adaFile) {
-                alert("BERHASIL! Regulasi telah diunggah ke Supabase dan kini dapat diunduh oleh publik.");
+                alert("BERHASIL! Regulasi telah diunggah ke Supabase.");
                 form.reset();
                 muatDaftarFile(); 
-                document.querySelector('.peraturan-panel').scrollIntoView({ behavior: 'smooth' });
             } else {
-                alert("Peringatan: Silakan pilih minimal satu dokumen dari komputer/HP Anda terlebih dahulu pada salah satu Slot Dokumen.");
+                alert("Peringatan: Silakan pilih minimal satu dokumen terlebih dahulu.");
             }
         }
 
-        // Jalankan perintah saat halaman dibuka
         window.onload = muatDaftarFile;
     </script>
 </body>
