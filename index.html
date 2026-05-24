@@ -403,21 +403,31 @@
             </div>
 
             <div class="upload-panel">
-                <div class="upload-panel-header"><i class="fas fa-file-upload"></i> PUSAT UNGGAH REGULASI & DASAR HUKUM (ADMIN)</div>
-                <p style="font-size: 0.9rem; color: var(--text-muted);">Gunakan fitur di bawah ini untuk mengunggah dokumen PDF/Docx terkait peraturan, petunjuk teknis, atau dasar hukum pelaksanaan PPDB/SPMB terbaru.</p>
-                
-                <div class="upload-grid">
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 1</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 2</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 3</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 4</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 5</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 6</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 7</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 8</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 9</label><input type="file" accept=".pdf,.doc,.docx"></div>
-                    <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 10</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                <div class="upload-panel-header">
+                    <i class="fas fa-file-upload"></i> PUSAT UNGGAH REGULASI & DASAR HUKUM (ADMIN)
                 </div>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Gunakan fitur di bawah ini untuk mengunggah dokumen PDF/Docx terkait peraturan, petunjuk teknis, atau dasar hukum pelaksanaan PPDB/SPMB terbaru.
+                </p>
+                
+                <form id="formRegulasi" onsubmit="simulasikanUnggah(event)">
+                    <div class="upload-grid">
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 1</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 2</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 3</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 4</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 5</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 6</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 7</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 8</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 9</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                        <div class="upload-box"><label><i class="fas fa-file-pdf"></i> Dokumen Regulasi 10</label><input type="file" accept=".pdf,.doc,.docx"></div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="margin-top: 2rem; background: linear-gradient(135deg, var(--accent), #9d139b); border-radius: 12px; padding: 1.2rem;">
+                        <i class="fas fa-cloud-upload-alt"></i> SIMPAN & UNGGAH REGULASI
+                    </button>
+                </form>
             </div>
 
         </div>
@@ -741,6 +751,32 @@
             document.getElementById('pendaftaran-section').style.display = 'none';
             document.getElementById('halaman-depan').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function simulasikanUnggah(event) {
+            // Mencegah halaman reload saat tombol submit ditekan
+            event.preventDefault(); 
+            
+            const form = document.getElementById('formRegulasi');
+            const inputs = form.querySelectorAll('input[type="file"]');
+            let adaFile = false;
+
+            // Cek apakah ada file yang benar-benar dipilih
+            inputs.forEach(input => {
+                if (input.files.length > 0) {
+                    adaFile = true;
+                }
+            });
+
+            if (adaFile) {
+                // Tampilkan notifikasi sukses
+                alert("Terkonfirmasi! Dokumen regulasi berhasil diunggah ke sistem prototipe.");
+                // Kosongkan kembali form setelah diunggah
+                form.reset();
+            } else {
+                // Peringatan jika admin memencet tombol tapi belum memilih file satupun
+                alert("Peringatan: Silakan pilih minimal satu file regulasi terlebih dahulu sebelum mengunggah.");
+            }
         }
     </script>
 </body>
