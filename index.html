@@ -6,12 +6,10 @@
     <title>SPMB Online - UPTD SDN 21 SANGGALEA</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
-            /* HIGH-TECH TECH PALETTE */
             --primary: #1a1d4b;
             --primary-light: #4f46e5;
             --secondary: #00f7ff;
@@ -20,28 +18,20 @@
             --bg-card: rgba(30, 41, 59, 0.7);
             --border-tech: #334155;
             
-            /* GLO EFFECT & SHADOWS */
             --glow-cyan: 0 0 15px rgba(0, 247, 255, 0.4);
             --glow-cyan-strong: 0 0 25px rgba(0, 247, 255, 0.6);
             --glow-magenta: 0 0 15px rgba(226, 31, 223, 0.4);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.3), 0 4px 6px -2px rgba(0,0,0,0.15);
 
-            /* TEXT COLORS */
             --text-on-deep: #f8fafc;
             --text-muted: #cbd5e1;
             --text-bright: #ffffff;
 
-            /* OTHER SETTINGS */
             --radius-md: 12px;
             --radius-lg: 20px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
 
         body {
             background-color: var(--bg-deep);
@@ -52,7 +42,7 @@
                 radial-gradient(circle at 10% 10%, rgba(79, 70, 229, 0.1) 0%, transparent 40%),
                 radial-gradient(circle at 90% 90%, rgba(0, 247, 255, 0.1) 0%, transparent 40%),
                 radial-gradient(circle at 50% 50%, rgba(226, 31, 223, 0.05) 0%, transparent 50%),
-                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0MzQxNTUiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDR2NEgwVjB6bTAgOGg0djRIMFY4em0wIDE2aDR2NEgwVjI0em0wIDMyaDR2NEgwVjMyejI4IDMyaDR2NEgyOFYzMnpNMjggMjRoNHY0SDI4VjI0em0yOCAzMmguODF2NEg1NnYtNHpNMjggOGg0djRIMjhWOHpNMjggMGg0djRIMjhWMHogMzIgMzJoNHY0SDMyVjMyeiAzMiAyNGg0djRIMzJWMjR6IDMyIDhoNHY0SDMyVjh6IDMyIDB0aDR2NEgzMlYweiIgLz48L2c+PC9nPjwvc3ZnPg==');
+                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw =\"#434155\" fill-opacity=\"0.2\"><path d=\"M0 0h4v4H0V0zm0 8h4v4H0V8zm0 16h4v4H0V24zm0 32h4v4H0V32zM28 32h4v4h-4v-4zM28 24h4v4h-4v-4zm28 8h.81v4H56v-4zM28 8h4v4h-4V8zM28 0h4v4h-4V0zM32 32h4v4h-4v-4zm0-8h4v4h-4v-4zm0-16h4v4h-4V8zm0-8h4v4h-4V0z\" /></g></g></svg>');
             background-attachment: fixed;
             background-position: center;
         }
@@ -108,15 +98,14 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: -2rem auto 3rem auto;
             padding: 0 1rem;
             position: relative;
             z-index: 10;
         }
 
-        /* CARD & PANEL STYLES */
-        .visi-sekolah-section, .card, .peraturan-panel, .dashboard-card {
+        .visi-sekolah-section, .card, .peraturan-panel, .form-section-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
@@ -153,15 +142,15 @@
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
         }
 
-        .card { padding: 1.75rem; border: 2px solid rgba(79, 70, 229, 0.5); }
+        .card { padding: 1.75rem; border: 2px solid rgba(79, 70, 229, 0.5); display: flex; flex-direction: column; justify-content: space-between; }
         .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
         .card-header i { font-size: 1.5rem; color: var(--secondary); background: rgba(0, 247, 255, 0.1); padding: 0.75rem; border-radius: 50%; }
         .card .date { color: var(--secondary); font-weight: 600; margin-bottom: 1rem; display: block; }
-        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; flex-grow: 1; }
         
         .btn-submit {
             padding: 1rem;
@@ -183,7 +172,28 @@
 
         .btn-submit:hover { box-shadow: 0 0 20px rgba(79, 70, 229, 0.6); transform: translateY(-2px); }
 
-        /* UPLOAD REGULASI PANEL */
+        .btn-jalur-daftar {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            color: white;
+            box-shadow: 0 4px 10px rgba(226, 31, 223, 0.2);
+        }
+        .btn-jalur-daftar:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-magenta);
+        }
+
         .upload-panel {
             background: rgba(15, 23, 42, 0.7);
             border: 2px dashed rgba(226, 31, 223, 0.5);
@@ -205,43 +215,7 @@
             text-transform: uppercase;
         }
 
-        .upload-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .upload-box {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid var(--border-tech);
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .upload-box label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .upload-box input[type="file"] {
-            width: 100%;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        /* DOWNLOAD LIST PUBLIK */
-        .download-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
+        .download-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
         
         .download-item {
             background: rgba(15, 23, 42, 0.6);
@@ -273,13 +247,8 @@
             transition: all 0.3s;
         }
 
-        .btn-download:hover {
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
-            transform: translateY(-2px);
-            color: #fff;
-        }
+        .btn-download:hover { box-shadow: 0 0 15px rgba(14, 165, 233, 0.6); transform: translateY(-2px); color: #fff; }
 
-        /* ADVANCED FORM STYLING */
         #pendaftaran-section, #admin-dashboard-section { display: none; margin-top: 1rem; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -308,168 +277,39 @@
             text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
         }
 
-        .form-subheader {
-            font-size: 0.9rem;
-            color: var(--accent);
-            font-weight: 700;
-            margin: 1.5rem 0 1rem 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(226, 31, 223, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            display: inline-block;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
+        .form-subheader { font-size: 0.9rem; color: var(--accent); font-weight: 700; margin: 1.5rem 0 1rem 0; text-transform: uppercase; letter-spacing: 1px; background: rgba(226, 31, 223, 0.1); padding: 0.5rem 1rem; border-radius: 6px; display: inline-block; }
+        .form-row { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
         @media (min-width: 768px) { .form-row { grid-template-columns: 1fr 1fr; } }
         .form-row.full { grid-template-columns: 1fr; }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border: 1px solid var(--border-tech);
-            border-radius: 6px;
-            outline: none;
-            font-size: 0.95rem;
-            background: rgba(15, 23, 42, 0.8);
-            color: var(--text-bright);
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            color-scheme: dark;
-        }
-        
-        optgroup {
-            background-color: #1e293b;
-            color: #00f7ff;
-            font-weight: 700;
-            font-style: normal;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(0, 247, 255, 0.2);
-        }
-
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 700; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select { width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border-tech); border-radius: 6px; outline: none; font-size: 0.95rem; background: rgba(15, 23, 42, 0.8); color: var(--text-bright); transition: all 0.3s ease; font-family: 'Inter', sans-serif; color-scheme: dark; }
+        optgroup { background-color: #1e293b; color: #00f7ff; font-weight: 700; font-style: normal; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(0, 247, 255, 0.2); }
         .info-text { font-size: 0.8rem; color: #94a3b8; font-style: italic; margin-top: 0.5rem; display: block; }
 
-        /* CHECKBOX STYLING */
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(15, 23, 42, 0.4);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        .checkbox-group { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; background: rgba(15, 23, 42, 0.4); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--secondary); }
+        .checkbox-group label { font-size: 0.9rem; color: var(--text-bright); cursor: pointer; margin: 0; text-transform: none; font-weight: 500; }
 
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--secondary);
-        }
-
-        .checkbox-group label {
-            font-size: 0.9rem;
-            color: var(--text-bright);
-            cursor: pointer;
-            margin: 0;
-            text-transform: none;
-            font-weight: 500;
-        }
-
-        .back-btn {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-tech);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        .back-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-tech); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-bottom: 1.5rem; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; }
         .back-btn:hover { color: var(--text-bright); background: rgba(255,255,255,0.1); }
 
-        /* TABLE TECH STYLING FOR ADMIN */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            margin-top: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-tech);
-        }
-
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-            background: rgba(15, 23, 42, 0.6);
-        }
-
-        .admin-table th {
-            background-color: rgba(79, 70, 229, 0.3);
-            color: var(--secondary);
-            padding: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            border-bottom: 2px solid var(--border-tech);
-        }
-
-        .admin-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-tech);
-            color: var(--text-muted);
-        }
-
-        .admin-table tr:hover {
-            background: rgba(30, 41, 59, 0.5);
-        }
-
-        .badge-count {
-            background: var(--accent);
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 1rem;
-            font-weight: 800;
-            box-shadow: var(--glow-magenta);
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 1.5rem; border-radius: 8px; border: 1px solid var(--border-tech); }
+        .admin-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; background: rgba(15, 23, 42, 0.6); }
+        .admin-table th { background-color: rgba(79, 70, 229, 0.3); color: var(--secondary); padding: 1rem; font-weight: 700; border-bottom: 2px solid var(--border-tech); white-space: nowrap; }
+        .admin-table td { padding: 1rem; border-bottom: 1px solid var(--border-tech); color: var(--text-muted); }
+        .badge-count { background: var(--accent); padding: 0.2rem 0.8rem; border-radius: 20px; font-weight: 800; font-size: 1rem; box-shadow: var(--glow-magenta);}
+        
+        .action-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn-verify { background: #10b981; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        .btn-print { background: #3b82f6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        .btn-delete { background: #ef4444; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        .btn-verify:hover { background: #059669; }
+        .btn-print:hover { background: #2563eb; }
         .btn-delete:hover { background: #b91c1c; }
-
+        .badge-status-menunggu { background: #f59e0b; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; display: inline-block;}
+        .badge-status-verif { background: #10b981; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; display: inline-block;}
     </style>
 </head>
 <body>
@@ -491,28 +331,42 @@
             <h2 class="section-title"><i class="fas fa-calendar-alt"></i> JALUR PENDAFTARAN 2026</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-hand-holding-heart"></i><h3>Jalur Afirmasi</h3></div>
-                    <span class="date"><i class="far fa-clock"></i> 8 - 9 Juni 2026</span>
-                    <p>Diperuntukkan bagi calon peserta didik dari keluarga ekonomi tidak mampu.</p>
+                    <div>
+                        <div class="card-header"><i class="fas fa-hand-holding-heart"></i><h3>Jalur Afirmasi</h3></div>
+                        <span class="date"><i class="far fa-clock"></i> 8 - 9 Juni 2026</span>
+                        <p>Diperuntukkan bagi calon peserta didik dari keluarga ekonomi tidak mampu.</p>
+                    </div>
+                    <button type="button" class="btn-jalur-daftar" onclick="bukaPendaftaranJalur('Afirmasi')">
+                        <i class="fas fa-edit"></i> DAFTAR JALUR AFIRMASI
+                    </button>
                 </div>
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-exchange-alt"></i><h3>Jalur Mutasi</h3></div>
-                    <span class="date"><i class="far fa-clock"></i> 17 - 18 Juni 2026</span>
-                    <p>Perpindahan tugas orang tua/wali dari luar daerah instansi atau perusahaan.</p>
+                    <div>
+                        <div class="card-header"><i class="fas fa-exchange-alt"></i><h3>Jalur Mutasi</h3></div>
+                        <span class="date"><i class="far fa-clock"></i> 17 - 18 Juni 2026</span>
+                        <p>Perpindahan tugas orang tua/wali dari luar daerah instansi atau perusahaan.</p>
+                    </div>
+                    <button type="button" class="btn-jalur-daftar" onclick="bukaPendaftaranJalur('Mutasi')">
+                        <i class="fas fa-edit"></i> DAFTAR JALUR MUTASI
+                    </button>
                 </div>
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-map-marked-alt"></i><h3>Jalur Zonasi / Domisili</h3></div>
-                    <span class="date"><i class="far fa-clock"></i> 22 - 24 Juni 2026</span>
-                    <p>Berdasarkan wilayah tempat tinggal / domisili terdekat dengan sekolah yang dituju.</p>
+                    <div>
+                        <div class="card-header"><i class="fas fa-map-marked-alt"></i><h3>Jalur Zonasi / Domisili</h3></div>
+                        <span class="date"><i class="far fa-clock"></i> 22 - 24 Juni 2026</span>
+                        <p>Berdasarkan wilayah tempat tinggal / domisili terdekat dengan sekolah yang dituju.</p>
+                    </div>
+                    <button type="button" class="btn-jalur-daftar" onclick="bukaPendaftaranJalur('Domisili')">
+                        <i class="fas fa-edit"></i> DAFTAR JALUR ZONASI
+                    </button>
                 </div>
             </div>
 
             <div class="peraturan-panel" style="margin-top: 2.5rem; padding: 2rem; border: 2px solid rgba(0, 247, 255, 0.4);">
                 <div class="section-title" style="margin-bottom: 0.5rem;"><i class="fas fa-download"></i> PUSAT UNDUH REGULASI (PUBLIK)</div>
                 <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
-                    Silakan unduh dokumen peraturan, juknis, dan formulir pendukung PPDB yang telah disediakan oleh panitia di bawah ini.
+                    Silakan unduh dokumen peraturan, juknis, and formulir pendukung PPDB yang telah disediakan oleh panitia di bawah ini.
                 </p>
-                
                 <div id="tempat-download-regulasi" class="download-list">
                     <p id="pesan-kosong" style="text-align: center; color: #64748b; font-style: italic; padding: 2rem; border: 1px dashed #334155; border-radius: 8px;">
                         Belum ada dokumen regulasi yang dipublikasikan oleh Panitia Admin.
@@ -520,46 +374,40 @@
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 3.5rem;">
-                <button class="btn-submit" onclick="bukaFormPendaftaran()" style="display: inline-flex; width: auto; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-light), var(--accent));">
-                    <i class="fas fa-rocket"></i> MULAI PENDAFTARAN
-                </button>
-            </div>
-
             <div class="upload-panel">
                 <div class="upload-panel-header">
                     <i class="fas fa-user-shield"></i> PUSAT PANEL KONTROL (KHUSUS ADMIN)
                 </div>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                    Gunakan panel ini untuk mengunggah berkas regulasi publik atau membuka Dashboard Rekapitulasi Calon Murid Baru.
+                    Gunakan panel ini untuk mengakses Dashboard Rekapitulasi Calon Murid Baru.
                 </p>
-                
-                <form id="formRegulasi" onsubmit="simulasikanUnggah(event)">
-                    <div class="upload-grid">
-                        <div class="upload-box"><label><i class="fas fa-file-alt"></i> Slot Dokumen 1</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-alt"></i> Slot Dokumen 2</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx"></div>
-                        <div class="upload-box"><label><i class="fas fa-file-alt"></i> Slot Dokumen 3</label><input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx"></div>
-                    </div>
 
-                    <button type="submit" class="btn-submit" style="margin-top: 2rem; background: linear-gradient(135deg, var(--accent), #9d139b); border-radius: 12px; padding: 1.2rem;">
-                        <i class="fas fa-cloud-upload-alt"></i> UNGGAH & PUBLIKASIKAN KE PUBLIK
-                    </button>
-                </form>
-
-                <button onclick="aksesDashboardAdmin()" class="btn-submit" style="margin-top: 1.5rem; background: linear-gradient(135deg, #0284c7, #0369a1); border-radius: 12px; padding: 1.2rem;">
+               <button type="button" onclick="aksesDashboardAdmin()" style="width: 100%; margin-top: 1.5rem; background: linear-gradient(135deg, #0284c7, #0369a1); border-radius: 12px; padding: 1.2rem; color: white; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);">
                     <i class="fas fa-chart-line"></i> MASUK DASHBOARD DATA CALON MURID
                 </button>
             </div>
-
         </div>
 
         <section id="pendaftaran-section">
-            <button class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <button type="button" class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Kembali</button>
             
             <form id="formPendaftaranSiswa" onsubmit="kirimFormulir(event)">
                 
                 <div class="form-section-card">
-                    <div class="form-header"><i class="fas fa-id-card"></i> DATA PENDAFTARAN</div>
+                    <div class="form-header"><i class="fas fa-id-card"></i> DATA PENDAFTARAN & JALUR</div>
+                    
+                    <div class="form-row full">
+                        <div class="form-group" style="background: rgba(0, 247, 255, 0.1); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--secondary);">
+                            <label style="color: var(--secondary); font-size: 0.9rem;"><i class="fas fa-route"></i> Jalur Pendaftaran Terpilih</label>
+                            <select id="inp-jalur" required onchange="perbaruiDaftarPersyaratan()" style="border-color: var(--secondary); font-weight: bold; font-size: 1rem;">
+                                <option value="">-- SILAKAN PILIH JALUR --</option>
+                                <option value="Afirmasi">1. Jalur Afirmasi</option>
+                                <option value="Mutasi">2. Jalur Mutasi / Perpindahan Orang Tua</option>
+                                <option value="Domisili">3. Jalur Domisili / Zonasi</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label>NIK Anak (16 Digit)</label>
@@ -638,21 +486,7 @@
                         </div>
                         <div class="form-group">
                             <label>RT / RW & Lingkungan</label>
-                            <select id="inp-rtrw" required>
-                                <option value="">-- Pilih RT/RW --</option>
-                                <optgroup label="Kelurahan Adatongeng">
-                                    <option value="RW 004 ling. bonto puasa">RW 004 ling. bonto puasa</option>
-                                    <option value="RW 003 ling. kalli-kalli">RW 003 ling. kalli-kalli</option>
-                                    <option value="RW 002 ling. Tumalia">RW 002 ling. Tumalia</option>
-                                </optgroup>
-                                <optgroup label="Kelurahan Taroada">
-                                    <option value="RW 005 ling. Ballu-Ballu">RW 005 ling. Ballu-Ballu</option>
-                                    <option value="RW 001 ling. Maccopa I">RW 001 ling. Maccopa I</option>
-                                    <option value="RW 003 ling. Maccopa II">RW 003 ling. Maccopa II</option>
-                                    <option value="RW 002 ling. sanggalea I">RW 002 ling. sanggalea I</option>
-                                    <option value="RW 004 ling. sanggalea II">RW 004 ling. sanggalea II</option>
-                                </optgroup>
-                            </select>
+                            <input type="text" id="inp-rtrw" required placeholder="Contoh: RT 002 / RW 004 Lingk. Sanggalea II">
                         </div>
                     </div>
                     <div class="form-row">
@@ -691,6 +525,22 @@
                             <input type="text">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>No. ASKES / KIS / BPJS</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>No. KKS/KPS/PKH (Bila Ada)</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>No. KITAS (Hanya WNA)</label>
+                            <input type="text">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-section-card">
@@ -705,24 +555,25 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Penghasilan / Bulan</label>
+                            <label>Tahun Lahir</label>
+                            <input type="text" placeholder="YYYY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Keadaan</label>
                             <select>
-                                <option value="< 1 JUTA">< 1 JUTA</option>
-                                <option value="1 - 3 JUTA">1 - 3 JUTA</option>
-                                <option value="> 3 JUTA">> 3 JUTA</option>
+                                <option value="HIDUP">HIDUP</option>
+                                <option value="MENINGGAL">MENINGGAL</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>No. Kontak / WA Ayah</label>
-                            <input type="text" id="inp-wa-ayah">
-                        </div>
                     </div>
-
-                    <div class="form-subheader" style="background: rgba(226, 31, 223, 0.2); color: #f472b6;">B. DATA IBU</div>
-                    <div class="form-row full">
+                    <div class="form-row">
                         <div class="form-group">
-                            <label>Nama Lengkap Ibu</label>
-                            <input type="text" id="inp-ibu" required>
+                            <label>Pendidikan Terakhir</label>
+                            <input type="text" placeholder="CONTOH: S1, SMA">
+                        </div>
+                        <div class="form-group">
+                            <label>Pekerjaan</label>
+                            <input type="text">
                         </div>
                     </div>
                     <div class="form-row">
@@ -735,124 +586,407 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>No. Kontak / WA Ibu</label>
+                            <label>No. Kontak / WA</label>
+                            <input type="text" id="inp-wa-ayah">
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Alamat (Bila Beda Dengan Anak)</label>
+                            <input type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-subheader" style="background: rgba(226, 31, 223, 0.2); color: #f472b6;">B. DATA IBU</div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Nama Lengkap Ibu</label>
+                            <input type="text" id="inp-ibu" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tahun Lahir</label>
+                            <input type="text" placeholder="YYYY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Keadaan</label>
+                            <select>
+                                <option value="HIDUP">HIDUP</option>
+                                <option value="MENINGGAL">MENINGGAL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pendidikan Terakhir</label>
+                            <input type="text" placeholder="CONTOH: S1, SMA">
+                        </div>
+                        <div class="form-group">
+                            <label>Pekerjaan</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Penghasilan / Bulan</label>
+                            <select>
+                                <option value="< 1 JUTA">< 1 JUTA</option>
+                                <option value="1 - 3 JUTA">1 - 3 JUTA</option>
+                                <option value="> 3 JUTA">> 3 JUTA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>No. Kontak / WA</label>
                             <input type="text" id="inp-wa-ibu">
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Alamat (Bila Beda Dengan Anak)</label>
+                            <input type="text">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-section-card">
-                    <div class="form-header"><i class="fas fa-file-alt"></i> KELENGKAPAN PERSYARATAN</div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="chk-foto" required>
-                        <label for="chk-foto">Saya bersedia melengkapi berkas persyaratan fisik saat verifikasi luring.</label>
+                    <div class="form-header"><i class="fas fa-user-shield"></i> DATA WALI (OPSIONAL)</div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; margin-top: -0.5rem;">Hanya diisi jika anak tinggal bersama wali (bukan orang tua kandung).</p>
+                    
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Nama Wali (Sesuai KTP)</label>
+                            <input type="text">
+                        </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tahun Lahir</label>
+                            <input type="text" placeholder="YYYY">
+                        </div>
+                        <div class="form-group">
+                            <label>Pendidikan Terakhir</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pekerjaan</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>Penghasilan</label>
+                            <select>
+                                <option value="">PILIH</option>
+                                <option value="< 1 JUTA">< 1 JUTA</option>
+                                <option value="1 - 3 JUTA">1 - 3 JUTA</option>
+                                <option value="> 3 JUTA">> 3 JUTA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>No. Kontak</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>Kontak Alternatif</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Alamat Wali</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section-card">
+                    <div class="form-header"><i class="fas fa-chart-bar"></i> DATA PERIODIK PESERTA DIDIK</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tinggi Badan (CM)</label>
+                            <input type="number">
+                        </div>
+                        <div class="form-group">
+                            <label>Berat Badan (KG)</label>
+                            <input type="number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Jarak Ke Sekolah (KM)</label>
+                            <input type="number" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Waktu Tempuh (Menit)</label>
+                            <input type="number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Anak Ke-</label>
+                            <input type="number">
+                        </div>
+                        <div class="form-group">
+                            <label>Jml Saudara Kandung</label>
+                            <input type="number">
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Jml Anggota Di Rumah</label>
+                            <input type="number" placeholder="Termasuk anak">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section-card" style="border: 2px solid var(--accent);">
+                    <div class="form-header"><i class="fas fa-file-signature"></i> KELENGKAPAN PERSYARATAN</div>
+                    <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-muted);">
+                        Berdasarkan peraturan resmi, calon murid wajib menyetujui dan membawa dokumen fisik berikut ke sekolah. 
+                    </p>
+                    
+                    <div id="wadah-persyaratan">
+                        </div>
                 </div>
 
                 <button type="submit" id="btnKirimForm" class="btn-submit" style="padding: 1.25rem; font-size: 1.1rem; border-radius: 12px; margin-bottom: 2rem;">
                     <i class="fas fa-paper-plane"></i> KIRIM FORMULIR PENDAFTARAN
                 </button>
+
+                <div class="form-section-card" style="text-align: center; padding: 3rem 2rem; margin-top: 2.5rem; border: 2px solid rgba(0, 247, 255, 0.3); box-shadow: var(--shadow-lg);">
+                    <div class="form-header" style="justify-content: center; border: none; margin-bottom: 0.5rem;">
+                        <i class="fas fa-headset" style="color: var(--secondary); text-shadow: var(--glow-cyan);"></i> LOKET INFORMASI & KONTAK
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">
+                        Mengalami kendala saat mendaftar? Silakan hubungi panitia PPDB kami melalui WhatsApp di bawah ini.
+                    </p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
+                        <a href="https://wa.me/6282348636763" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.15); transition: all 0.3s ease; color: var(--text-bright);" onmouseover="this.style.boxShadow='0 0 20px rgba(37, 211, 102, 0.4)'; this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 0 15px rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(0)\';">
+                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366; text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);"></i>
+                            <div style="text-align: left;">
+                                <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;">Ibu Linda</div>
+                                <div style="font-size: 0.85rem; color: #94a3b8;">0823-4863-6763</div>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/6281907161756" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; background: rgba(15, 23, 42, 0.8); padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.15); transition: all 0.3s ease; color: var(--text-bright);" onmouseover="this.style.boxShadow='0 0 20px rgba(37, 211, 102, 0.4)'; this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 0 15px rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(0)\';">
+                            <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: #25D366; text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);"></i>
+                            <div style="text-align: left;">
+                                <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px;">Ibu Tenri</div>
+                                <div style="font-size: 0.85rem; color: #94a3b8;">0819-0716-1756</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </form>
         </section>
 
         <section id="admin-dashboard-section">
-            <button class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Keluar Dashboard</button>
+            <button type="button" class="back-btn" onclick="kembaliKeDepan()"><i class="fas fa-arrow-left"></i> Keluar Dashboard</button>
             
             <div class="form-section-card" style="border: 2px solid var(--secondary); box-shadow: var(--glow-cyan);">
                 <div class="form-header" style="justify-content: space-between;">
-                    <span><i class="fas fa-database"></i> REKAPITULASI CALON MURID BARU</span>
+                    <span><i class="fas fa-database"></i> REKAPITULASI & VERIFIKASI CALON MURID</span>
                     <div>Total Pendaftar: <span id="count-pendaftar" class="badge-count">0</span></div>
                 </div>
-                
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-                    Berikut adalah seluruh berkas isian formulir siswa yang masuk secara real-time dari website.
-                </p>
 
                 <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>No. Pendaftaran</th>
                                 <th>Nama Lengkap</th>
                                 <th>NIK</th>
-                                <th>JK</th>
                                 <th>TTL</th>
-                                <th>RT/RW Lingkungan</th>
-                                <th>Orang Tua (WA)</th>
-                                <th>Aksi</th>
+                                <th>Status</th>
+                                <th>Aksi (Verifikasi / Cetak)</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-data-pendaftar">
-                            <tr>
-                                <td colspan="8" style="text-align: center; color: #64748b; font-style: italic; padding: 2rem;">
-                                    Memuat data pendaftar...
-                                </td>
-                            </tr>
+                            <tr><td colspan="7" style="text-align: center;">Memuat data pendaftar...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
-
     </div>
 
-   <script>
-        // =======================================================================
-        // KONFIGURASI SUPABASE (PASTIKAN KUNCI SUDAH DIGANTI DENGAN "eyJ...")
-        // =======================================================================
-        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5bGthc2lkZmJmaG93b3pjdWNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1OTc2ODAsImV4cCI6MjA5NTE3MzY4MH0.JGkdTtl3Nh1LcDeR_dzC1lMiA_IslkQQ3QJFtu3u07A'; 
-        
-        // PELINDUNG: Menggunakan try-catch agar jika koneksi/key error, tombol navigasi tidak ikut macet
-        let supabase = null;
-        try {
-            if (window.supabase) {
-                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-            } else {
-                console.error("SDK Supabase tidak terdeteksi. Pastikan script CDN Supabase sudah terpasang di atas.");
+    <script>
+        // DATA CONFIGURATION UNTUK DEADLINE & PASSWORD PER JALUR
+        const konfigurasiJalur = {
+            'Afirmasi': {
+                password: 'afirmasi123',
+                deadline: new Date('2026-06-10T00:00:00'), // Ditutup 9 Juni 23:59:59
+                tglTeks: '9 Juni 2026'
+            },
+            'Mutasi': {
+                password: 'mutasi123',
+                deadline: new Date('2026-06-19T00:00:00'), // Ditutup 18 Juni 23:59:59
+                tglTeks: '18 Juni 2026'
+            },
+            'Domisili': {
+                password: 'zonasi123',
+                deadline: new Date('2026-06-25T00:00:00'), // Ditutup 24 Juni 23:59:59
+                tglTeks: '24 Juni 2026'
             }
-        } catch (err) {
-            console.error("Gagal inisialisasi Supabase:", err);
-        }
+        };
 
-        // =======================================================================
-        // FUNGSI NAVIGASI HALAMAN (DIJAMIN 100% ANTI-MACET)
-        // =======================================================================
-        function bukaFormPendaftaran() {
-            const halDepan = document.getElementById('halaman-depan');
-            const secDaftar = document.getElementById('pendaftaran-section');
-            if (halDepan) halDepan.style.display = 'none';
-            if (secDaftar) secDaftar.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function bukaPendaftaranJalur(jalur) {
+            const config = konfigurasiJalur[jalur];
+            const sekarang = new Date();
 
-        function kembaliKeDepan() {
-            const secDaftar = document.getElementById('pendaftaran-section');
-            const secAdmin = document.getElementById('admin-dashboard-section');
-            const halDepan = document.getElementById('halaman-depan');
-            if (secDaftar) secDaftar.style.display = 'none';
-            if (secAdmin) secAdmin.style.display = 'none';
-            if (halDepan) halDepan.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // =======================================================================
-        // PROSES KIRIM FORMULIR KE DATABASE SUPABASE
-        // =======================================================================
-        async function kirimFormulir(event) {
-            event.preventDefault();
-
-            if (!supabase) {
-                alert("Gagal Mengirim: Hubungan ke database belum siap. Mohon periksa kembali Kunci Supabase Anda.");
+            // 1. CEK STATUS DEADLINE / KADALUWARSA
+            if (sekarang >= config.deadline) {
+                alert(`⚠️ AKSES DITOLAK!\nPendaftaran Jalur ${jalur} sudah ditutup karena telah melewati batas tanggal penutupan resmi (${config.tglTeks}).\nPassword masuk khusus jalur ini sudah dinonaktifkan otomatis oleh sistem.`);
                 return;
             }
 
-            const btn = document.getElementById('btnKirimForm');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
-            btn.disabled = true;
+            // 2. JIKA BELUM EXPIRED, TANYAKAN PASSWORD KHUSUS JALUR TERSEBUT
+            let inputPassword = prompt(`Guna keamanan sistem, masukkan PASSWORD AKSES khusus untuk Jalur ${jalur}:`);
+            
+            if (inputPassword === null) return; // User membatalkan prompt
 
-            // Mengambil semua data dari inputan form sesuai kode asli Anda
+            if (inputPassword === config.password) {
+                // Tampilkan Form
+                document.getElementById('halaman-depan').style.display = 'none';
+                document.getElementById('admin-dashboard-section').style.display = 'none';
+                document.getElementById('pendaftaran-section').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Set Nilai Dropdown Jalur & Kunci Agar Tidak Bisa Diganti Manual di Dalam Form
+                const selectJalur = document.getElementById('inp-jalur');
+                selectJalur.value = jalur;
+                selectJalur.disabled = true; 
+                
+                // Refresh data checkbox persyaratan
+                perbaruiDaftarPersyaratan();
+            } else {
+                alert("❌ PASSWORD SALAH!\nAnda tidak memiliki otoritas token untuk membuka formulir pendaftaran jalur ini.");
+            }
+        }
+        
+        function kembaliKeDepan() {
+            document.getElementById('pendaftaran-section').style.display = 'none';
+            document.getElementById('admin-dashboard-section').style.display = 'none';
+            document.getElementById('halaman-depan').style.display = 'block';
+            document.getElementById('inp-jalur').disabled = false; // Lepas kunci dropdown
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function aksesDashboardAdmin() {
+            let passwordAdmin = prompt("Masukkan Password Admin untuk mengakses panel:");
+
+            if (passwordAdmin === "admin123") {
+                document.getElementById('halaman-depan').style.display = 'none';
+                document.getElementById('pendaftaran-section').style.display = 'none';
+                document.getElementById('admin-dashboard-section').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                if (typeof muatDataPendaftar === "function") {
+                    muatDataPendaftar();
+                }
+            } else if (passwordAdmin !== null) {
+                alert("Akses Ditolak! Password yang Anda masukkan salah.");
+            }
+        }
+
+        // FUNGSI MENGUBAH CHECKBOX PERSYARATAN BERDASARKAN JALUR
+        function perbaruiDaftarPersyaratan() {
+            const jalur = document.getElementById('inp-jalur').value;
+            const wadah = document.getElementById('wadah-persyaratan');
+            let htmlHTML = '';
+
+            const reqUmum1 = { id: 'r1', label: 'Fotokopi Akta Kelahiran, KIA, atau Surat Keterangan Lahir (Dilegalisasi instansi jika belum tanda tangan elektronik).', req: true };
+            const reqUmum2 = { id: 'r2', label: 'Fotokopi Ijazah / Surat Tanda Tamat Belajar TK/RA/PAUD (Dilegalisasi jika belum elektronik).', req: false };
+            const reqUmum3 = { id: 'r3', label: 'Fotokopi Kartu Keluarga (KK).', req: true };
+
+            if (jalur === 'Afirmasi') {
+                const daftar = [
+                    reqUmum1, reqUmum2, reqUmum3,
+                    { id: 'af1', label: 'Bukti keikutsertaan program penanganan keluarga tidak mampu (PKH/KIP/KKS/dll) dari Pemerintah Pusat/Daerah.', req: true },
+                    { id: 'af2', label: 'Surat pernyataan bermaterai dari orang tua/wali bersedia diproses hukum jika memalsukan bukti tidak mampu.', req: true },
+                    { id: 'af3', label: 'Surat ket. dokter/psikolog/kartu Penyandang Disabilitas (Hanya khusus bagi pendaftar Penyandang Disabilitas).', req: false }
+                ];
+                htmlHTML = buatHTMLCheckbox(daftar);
+            } else if (jalur === 'Mutasi') {
+                const daftar = [
+                    reqUmum1, reqUmum2, reqUmum3,
+                    { id: 'mt1', label: 'Surat penugasan dari instansi, lembaga, kantor, atau perusahaan yang mempekerjakan orang tua.', req: true },
+                    { id: 'mt2', label: 'Surat keterangan pindah domisili orang tua/wali & anak dari Dinas Dukcapil.', req: true }
+                ];
+                htmlHTML = buatHTMLCheckbox(daftar);
+            } else if (jalur === 'Domisili') {
+                const daftar = [
+                    reqUmum1, reqUmum2, reqUmum3,
+                    { id: 'dm1', label: 'Rekomendasi psikolog profesional (Khusus pendaftar cerdas istimewa).', req: false },
+                    { id: 'dm2', label: '<b>Jika KK Berubah:</b> Lampirkan KK Lama ATAU Surat Ket. Kehilangan Kepolisian.', req: false },
+                    { id: 'dm3', label: '<b>Jika Pindah Rumah:</b> Surat Keterangan Perpindahan Domisili seluruh keluarga.', req: false },
+                    { id: 'dm4', label: '<b>Jika Tidak Punya KK:</b> Surat Ket. Domisili dari Lurah/Kades menerangkan telah berdomisili minimal 1 tahun.', req: false }
+                ];
+                htmlHTML = buatHTMLCheckbox(daftar);
+            } else {
+                htmlHTML = `<div style="padding: 2rem; text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px dashed var(--secondary);">
+                                <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: var(--secondary); margin-bottom: 10px;"></i>
+                                <p>Anda belum memilih Jalur Pendaftaran pada Bagian 1.</p>
+                            </div>`;
+            }
+            wadah.innerHTML = htmlHTML;
+        }
+
+        function buatHTMLCheckbox(arrayPersyaratan) {
+            let html = '';
+            arrayPersyaratan.forEach(req => {
+                const reqAttr = req.req ? 'required' : '';
+                const reqStar = req.req ? '<span style="color: #ef4444; margin-left:3px;">*</span>' : '<span style="background: #475569; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; margin-left: 5px;">KONDISIONAL</span>';
+                html += `
+                    <div class="checkbox-group" style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; background: rgba(15, 23, 42, 0.4); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                        <input type="checkbox" id="${req.id}" ${reqAttr} style="width: 22px; height: 22px; cursor: pointer; accent-color: #00f7ff; margin-top: 0.2rem;">
+                        <label for="${req.id}" style="font-size: 0.9rem; color: #ffffff; cursor: pointer; margin: 0; line-height: 1.4; text-transform: none; font-weight: 500;">${req.label}${reqStar}</label>
+                    </div>`;
+            });
+            return html;
+        }    
+    </script>
+
+    <script>
+        const supabaseUrl = 'https://wylkasidfbfhowozcuce.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5bGthc2lkZmJmaG93b3pjdWNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1OTc2ODAsImV4cCI6MjA5NTE3MzY4MH0.JGkdTtl3Nh1LcDeR_dzC1lMiA_IslkQQ3QJFtu3u07A'; 
+        
+        let clientSupabase = null;
+        window.dataPendaftarGlobal = []; 
+
+        try {
+            if (window.supabase) clientSupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        } catch (err) { console.error(err); }
+
+        async function kirimFormulir(event) {
+            event.preventDefault();
+            
+            document.getElementById('inp-jalur').disabled = false; // Aktifkan sebentar agar nilainya terbaca penuh
+            const jalurDipilih = document.getElementById('inp-jalur').value;
+            if(!jalurDipilih) { alert("Silakan pilih Jalur Pendaftaran terlebih dahulu!"); return; }
+
+            if (!clientSupabase || supabaseKey.includes('MASUKKAN')) {
+                alert("Database belum diatur. Masukkan Key 'eyJ' Anda di dalam kode."); return;
+            }
+
+            const btn = document.getElementById('btnKirimForm');
+            btn.innerHTML = 'MEMPROSES...'; btn.disabled = true;
+
+            // Membuat nomor pendaftaran otomatis secara real-time
+            const kodeJalur = jalurDipilih === 'Afirmasi' ? 'AFI' : (jalurDipilih === 'Mutasi' ? 'MUT' : 'ZON');
+            const nomorUrutAcak = Math.floor(100000 + Math.random() * 900000); 
+            const nomorPendaftaranOtomatis = `REG-2026-${kodeJalur}-${nomorUrutAcak}`;
+
             const dataSiswa = {
+                nomor_pendaftaran: nomorPendaftaranOtomatis, // Tersambung ke DB payload
+                jalur: jalurDipilih,
                 nik: document.getElementById('inp-nik').value,
                 nisn: document.getElementById('inp-nisn').value,
                 nama: document.getElementById('inp-nama').value,
@@ -868,252 +1002,177 @@
                 nama_ayah: document.getElementById('inp-ayah').value,
                 wa_ayah: document.getElementById('inp-wa-ayah').value,
                 nama_ibu: document.getElementById('inp-ibu').value,
-                wa_ibu: document.getElementById('inp-wa-ibu').value
+                wa_ibu: document.getElementById('inp-wa-ibu').value,
+                status: 'Menunggu' 
             };
 
             try {
-                const { data, error } = await supabase
-                    .from('pendaftaran')
-                    .insert([dataSiswa]);
-
+                const { error } = await clientSupabase.from('pendaftaran').insert([dataSiswa]);
                 if (error) {
-                    alert("Gagal Mengirim: " + error.message);
+                    alert("Gagal: " + error.message);
+                    document.getElementById('inp-jalur').disabled = true; // Kunci kembali jika gagal
                 } else {
-                    alert("Selamat! Formulir pendaftaran " + dataSiswa.nama + " BERHASIL terkirim dan disimpan di sistem.");
+                    alert(`🎉 PENDAFTARAN BERHASIL!\n\nData Anda telah terekam di sistem.\nNomor Pendaftaran Anda: ${nomorPendaftaranOtomatis}\n\nSilakan simpan nomor ini untuk verifikasi berkas fisik.`);
                     document.getElementById('formPendaftaranSiswa').reset();
                     kembaliKeDepan();
                 }
-            } catch (err) {
-                console.error(err);
-                alert("Terjadi masalah jaringan.");
-            } finally {
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM FORMULIR PENDAFTARAN';
-                btn.disabled = false;
-            }
+            } catch (err) { 
+                alert("Terjadi masalah jaringan."); 
+                document.getElementById('inp-jalur').disabled = true;
+            } 
+            finally { btn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM FORMULIR PENDAFTARAN'; btn.disabled = false; }
         }
 
-        // =======================================================================
-        // AKSES & GEBANG PASSWORD DASHBOARD ADMIN
-        // =======================================================================
-        function aksesDashboardAdmin() {
-            const password = prompt("Masukkan Kata Sandi Panel Admin:");
-            
-            if (password === "admin21") { 
-                const halDepan = document.getElementById('halaman-depan');
-                const secAdmin = document.getElementById('admin-dashboard-section');
-                if (halDepan) halDepan.style.display = 'none';
-                if (secAdmin) secAdmin.style.display = 'block';
-                muatDataPendaftar();
-            } else if (password !== null) {
-                alert("Kata sandi salah! Akses ditolak.");
-            }
-        }
-
-        // =======================================================================
-        // LOAD DATA PENDAFTAR DARI DATABASE KE DASHBOARD
-        // =======================================================================
-        async function muatDataPendaftar() {
+        window.muatDataPendaftar = async function() {
             const tbody = document.getElementById('tabel-data-pendaftar');
             const counter = document.getElementById('count-pendaftar');
 
-            if (!tbody) return;
-
-            if (!supabase) {
-                tbody.innerHTML = `<tr><td colspan="8" style="color:#ef4444;">Gagal mengambil data: Hubungan database terputus/belum siap.</td></tr>`;
-                return;
-            }
+            if (!clientSupabase || supabaseKey.includes('MASUKKAN')) return;
 
             try {
-                const { data, error } = await supabase
-                    .from('pendaftaran')
-                    .select('*')
-                    .order('created_at', { ascending: false });
+                const { data, error } = await clientSupabase.from('pendaftaran').select('*').order('created_at', { ascending: false });
+                if (error) { tbody.innerHTML = `<tr><td colspan="7">Error: ${error.message}</td></tr>`; return; }
 
-                if (error) {
-                    tbody.innerHTML = `<tr><td colspan="8" style="color:#ef4444;">Gagal mengambil data: ${error.message}</td></tr>`;
-                    return;
-                }
-
-                if (counter) counter.innerText = data.length;
+                window.dataPendaftarGlobal = data; 
+                counter.innerText = data.length;
 
                 if (data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; font-style:italic;">Belum ada calon murid yang mendaftar.</td></tr>`;
-                    return;
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Belum ada pendaftar.</td></tr>`; return;
                 }
 
-                let htmlContent = '';
+                let html = '';
                 data.forEach((siswa, index) => {
-                    const tglLahirFormatted = siswa.tanggal_lahir ? siswa.tanggal_lahir.split('-').reverse().join('/') : '-';
-                    htmlContent += `
+                    const tgl = siswa.tanggal_lahir ? siswa.tanggal_lahir.split('-').reverse().join('/') : '-';
+                    const statusBadge = siswa.status === 'Terverifikasi' 
+                        ? '<span class="badge-status-verif"><i class="fas fa-check-circle"></i> Terverifikasi</span>' 
+                        : '<span class="badge-status-menunggu"><i class="fas fa-clock"></i> Menunggu</span>';
+                    const noPendaftaran = siswa.nomor_pendaftaran ? siswa.nomor_pendaftaran : `REG-2026-MIGRASI-${siswa.id}`;
+
+                    html += `
                         <tr>
                             <td>${index + 1}</td>
-                            <td style="color:var(--text-bright); font-weight:600;">${siswa.nama}</td>
+                            <td style="color: var(--secondary); font-weight: bold; font-family: monospace; font-size:0.95rem;">${noPendaftaran}</td>
+                            <td style="color:#fff; font-weight:bold;">${siswa.nama}</td>
                             <td>${siswa.nik}</td>
-                            <td>${siswa.jenis_kelamin === 'Laki-laki' ? 'L' : 'P'}</td>
-                            <td>${siswa.tempat_lahir}, ${tglLahirFormatted}</td>
-                            <td>${siswa.rt_rw}</td>
+                            <td>${siswa.tempat_lahir}, ${tgl}</td>
+                            <td>${statusBadge}</td>
                             <td>
-                                Ayah: ${siswa.nama_ayah} (${siswa.wa_ayah || '-'})<br>
-                                Ibu: ${siswa.nama_ibu} (${siswa.wa_ibu || '-'})
-                            </td>
-                            <td>
-                                <button class="btn-delete" onclick="hapusPendaftar(${siswa.id}, '${siswa.nama}')">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
+                                <div class="action-buttons">
+                                    <button type="button" class="btn-verify" onclick="verifikasiPendaftar(${siswa.id})" title="Verifikasi Pendaftar"><i class="fas fa-check"></i></button>
+                                    <button type="button" class="btn-print" onclick="cetakFormulir(${siswa.id})" title="Cetak/PDF Formulir"><i class="fas fa-print"></i></button>
+                                    <button type="button" class="btn-delete" onclick="hapusPendaftar(${siswa.id}, '${siswa.nama}')" title="Hapus"><i class="fas fa-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                     `;
                 });
-                tbody.innerHTML = htmlContent;
+                tbody.innerHTML = html;
+            } catch (err) { console.error(err); }
+        }
 
-            } catch (err) {
-                console.error(err);
-                tbody.innerHTML = `<tr><td colspan="8" style="color:#ef4444;">Terjadi kesalahan sistem.</td></tr>`;
+        window.verifikasiPendaftar = async function(id) {
+            if (confirm("Apakah Anda yakin ingin MEMVERIFIKASI berkas pendaftar ini?")) {
+                const { error } = await clientSupabase.from('pendaftaran').update({ status: 'Terverifikasi' }).eq('id', id);
+                if (error) alert("Gagal verifikasi: " + error.message);
+                else { alert("Pendaftar berhasil diverifikasi!"); window.muatDataPendaftar(); }
             }
         }
 
-        // =======================================================================
-        // FITUR HAPUS DATA DATA PENFAFTAR
-        // =======================================================================
-        async function hapusPendaftar(id, nama) {
-            if (!supabase) {
-                alert("Gagal menghapus: Koneksi ke database tidak aktif.");
-                return;
-            }
-
-            if (confirm(`Apakah Anda yakin ingin menghapus data calon murid bernama "${nama}" dari sistem?`)) {
-                const { error } = await supabase
-                    .from('pendaftaran')
-                    .delete()
-                    .eq('id', id);
-
-                if (error) {
-                    alert("Gagal menghapus: " + error.message);
-                } else {
-                    alert("Data berhasil dihapus.");
-                    muatDataPendaftar(); // Refresh tabel admin
-                }
+        window.hapusPendaftar = async function(id, nama) {
+            if (confirm(`Yakin ingin MENGHAPUS pendaftar bernama "${nama}"?`)) {
+                const { error } = await clientSupabase.from('pendaftaran').delete().eq('id', id);
+                if (!error) window.muatDataPendaftar();
             }
         }
 
-        // =======================================================================
-        // REGULASI STORAGE MANAGEMENT (BAWAAN SEBELUMNYA)
-        // =======================================================================
+        window.cetakFormulir = function(id) {
+            const siswa = window.dataPendaftarGlobal.find(s => s.id === id);
+            if (!siswa) { alert("Data tidak ditemukan!"); return; }
+
+            const noPendaftaran = siswa.nomor_pendaftaran ? siswa.nomor_pendaftaran : `REG-2026-MIGRASI-${siswa.id}`;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Formulir_PPDB_${siswa.nama}</title>
+                    <style>
+                        body { font-family: 'Times New Roman', Times, serif; padding: 30px; line-height: 1.5; color: #000; }
+                        .kop-surat { text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 30px; }
+                        .kop-surat h2, .kop-surat h3 { margin: 0; padding: 0; }
+                        .badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-top: 10px; border: 1px solid #000; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                        td { padding: 10px; border: 1px solid #000; vertical-align: top; font-size: 14px; }
+                        .col-label { font-weight: bold; width: 35%; background-color: #f0f0f0; }
+                        .ttd-box { width: 100%; margin-top: 40px; display: flex; justify-content: space-between; text-align: center; font-size: 14px; }
+                        .ttd-space { margin-top: 80px; text-decoration: underline; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="kop-surat">
+                        <h3>PANITIA PENERIMAAN PESERTA DIDIK BARU (PPDB)</h3>
+                        <h2>UPTD SDN 21 SANGGALEA</h2>
+                        <p style="margin: 5px 0 0 0; font-size: 14px;">Tahun Ajaran 2026/2027</p>
+                    </div>
+
+                    <h3 style="text-align: center; text-decoration: underline;">FORMULIR BUKTI PENDAFTARAN</h3>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <span class="badge">Status Berkas: ${siswa.status.toUpperCase()}</span>
+                    </div>
+
+                    <table>
+                        <tr><td class="col-label">Nomor Pendaftaran</td><td style="font-weight:bold; font-size:16px; font-family:monospace; color:#000;">${noPendaftaran}</td></tr>
+                        <tr><td class="col-label">Jalur Pendaftaran</td><td style="font-weight:bold;">JALUR ${siswa.jalur.toUpperCase()}</td></tr>
+                        <tr><td class="col-label">Nomor Induk Kependudukan (NIK)</td><td>${siswa.nik}</td></tr>
+                        <tr><td class="col-label">NISN</td><td>${siswa.nisn || '-'}</td></tr>
+                        <tr><td class="col-label">Nama Lengkap Siswa</td><td style="font-weight:bold; text-transform:uppercase;">${siswa.nama}</td></tr>
+                        <tr><td class="col-label">Tempat, Tanggal Lahir</td><td>${siswa.tempat_lahir}, ${siswa.tanggal_lahir}</td></tr>
+                        <tr><td class="col-label">Jenis Kelamin</td><td>${siswa.jenis_kelamin}</td></tr>
+                        <tr><td class="col-label">Agama</td><td>${siswa.agama}</td></tr>
+                        <tr><td class="col-label">Asal Sekolah (TK/PAUD)</td><td>${siswa.asal_sekolah || '-'}</td></tr>
+                        <tr><td class="col-label">Alamat Lengkap</td><td>${siswa.jalan_dusun}, ${siswa.rt_rw}, Kel. ${siswa.kelurahan}, Kec. ${siswa.kecamatan}</td></tr>
+                        <tr><td class="col-label">Nama Ayah (No. HP/WA)</td><td>${siswa.nama_ayah} (${siswa.wa_ayah || '-'})</td></tr>
+                        <tr><td class="col-label">Nama Ibu (No. HP/WA)</td><td>${siswa.nama_ibu} (${siswa.wa_ibu || '-'})</td></tr>
+                    </table>
+
+                    <p style="text-indent: 30px; font-size: 14px;">Demikian formulir ini dicetak melalui Sistem PPDB Online sebagai bukti pendaftaran yang sah. Calon siswa diharapkan membawa formulir ini beserta berkas fisik persyaratan pada saat verifikasi luring di sekolah.</p>
+
+                    <div class="ttd-box">
+                        <div style="width: 40%;">
+                            Mengetahui,<br>Orang Tua / Wali Calon Siswa
+                            <div class="ttd-space">${siswa.nama_ayah || siswa.nama_ibu || '.................................'}</div>
+                        </div>
+                        <div style="width: 40%;">
+                            Maros, ........................... 2026<br>Panitia Verifikator PPDB
+                            <div class="ttd-space">.................................</div>
+                        </div>
+                    </div>
+
+                    <scr` + `ipt>
+                        window.onload = function() { window.print(); }
+                    </scr` + `ipt>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
         async function muatDaftarFile() {
-            const tempatDownload = document.getElementById('tempat-download-regulasi');
-            const pesanKosong = document.getElementById('pesan-kosong');
-
-            if (!tempatDownload) return;
-
-            if (!supabase) {
-                if (pesanKosong) pesanKosong.innerHTML = 'Gagal memuat file: Hubungan database terputus/belum siap.';
-                return;
-            }
-
+            if (!clientSupabase || supabaseKey.includes('MASUKKAN')) return;
             try {
-                const { data, error } = await supabase.storage.from('regulasi').list();
-
-                if (error) {
-                    console.error('Gagal memuat file:', error);
-                    if(pesanKosong) pesanKosong.innerHTML = 'Gagal terhubung ke server Supabase. Pastikan URL dan Key benar.';
-                    return;
-                }
-
+                const { data, error } = await clientSupabase.storage.from('regulasi').list();
+                if (error) return;
                 const files = data.filter(file => file.name !== '.emptyFolderPlaceholder');
-
+                const tempatDownload = document.getElementById('tempat-download-regulasi');
                 if (files.length > 0) {
-                    if (pesanKosong) pesanKosong.style.display = 'none';
-                    let listHTMLBaru = '';
-
-                    files.forEach(file => {
-                        const { data: publicUrlData } = supabase.storage.from('regulasi').getPublicUrl(file.name);
-                        const fileURL = publicUrlData.publicUrl;
-                        
-                        let ukuranFile = file.metadata && file.metadata.size ? (file.metadata.size / 1024).toFixed(2) + ' KB' : 'Tidak diketahui';
-                        if (file.metadata && file.metadata.size > 1024 * 1024) {
-                            ukuranFile = (file.metadata.size / (1024 * 1024)).toFixed(2) + ' MB';
-                        }
-
-                        let ikon = 'fa-file-alt';
-                        if(file.name.toLowerCase().endsWith('.pdf')) ikon = 'fa-file-pdf';
-                        if(file.name.toLowerCase().endsWith('.doc') || file.name.toLowerCase().endsWith('.docx')) ikon = 'fa-file-word';
-                        
-                        listHTMLBaru += `
-                            <div class="download-item">
-                                <div style="display: flex; align-items: center; gap: 15px;">
-                                    <i class="fas ${ikon}" style="font-size: 2rem; color: var(--accent);"></i>
-                                    <div>
-                                        <div style="font-weight: 700; font-size: 1rem; color: var(--text-bright);">${file.name}</div>
-                                        <div style="font-size: 0.8rem; color: var(--secondary);">Ukuran: ${ukuranFile}</div>
-                                    </div>
-                                </div>
-                                <a href="${fileURL}" target="_blank" class="btn-download">
-                                    <i class="fas fa-download"></i> UNDUH
-                                </a>
-                            </div>
-                        `;
+                    let html = '';
+                    files.forEach(f => {
+                        const { data: urlData } = clientSupabase.storage.from('regulasi').getPublicUrl(f.name);
+                        html += `<div class="download-item"><div style="font-weight:bold; color: #fff;">${f.name}</div><a href="${urlData.publicUrl}" target="_blank" class="btn-download">UNDUH</a></div>`;
                     });
-                    tempatDownload.innerHTML = listHTMLBaru;
-                } else {
-                     if (pesanKosong) {
-                         pesanKosong.style.display = 'block';
-                     }
+                    tempatDownload.innerHTML = html;
                 }
-            } catch (err) {
-                console.error("Terjadi kesalahan sistem:", err);
-            }
-        }
-
-        async function simulasikanUnggah(event) {
-            event.preventDefault(); 
-            
-            if (!supabase) {
-                alert("Gagal mengunggah: Hubungan database terputus/belum siap.");
-                return;
-            }
-            
-            const form = document.getElementById('formRegulasi');
-            const inputs = form.querySelectorAll('input[type="file"]');
-            const tombolSubmit = form.querySelector('button[type="submit"]');
-            const teksAsli = tombolSubmit.innerHTML;
-            
-            let adaFile = false;
-
-            tombolSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGUNGGAH...';
-            tombolSubmit.disabled = true;
-
-            try {
-                for (let input of inputs) {
-                    if (input.files.length > 0) {
-                        adaFile = true;
-                        const file = input.files[0];
-                        
-                        const { data, error } = await supabase.storage
-                            .from('regulasi')
-                            .upload(file.name, file, {
-                                cacheControl: '3600',
-                                upsert: true
-                            });
-
-                        if (error) {
-                            alert('Gagal mengunggah ' + file.name + ': ' + error.message);
-                        }
-                    }
-                }
-
-                if (adaFile) {
-                    alert("BERHASIL! Regulasi telah diunggah ke Supabase.");
-                    form.reset();
-                    muatDaftarFile(); 
-                } else {
-                    alert("Peringatan: Silakan pilih minimal satu dokumen terlebih dahulu.");
-                }
-            } catch (err) {
-                console.error(err);
-            } finally {
-                tombolSubmit.innerHTML = teksAsli;
-                tombolSubmit.disabled = false;
-            }
+            } catch (err) {}
         }
 
         window.onload = muatDaftarFile;
